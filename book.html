@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book a Meeting - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- Animations --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Hero Section --- */
+        .hero-header {
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            text-shadow: 0 0 15px var(--shadow-color);
+            margin-bottom: 20px;
+            border-right: .15em solid var(--accent-color);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite;
+        }
+
+        /* Typing effect */
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: var(--accent-color); }
+        }
+
+        .hero-header .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #ccc;
+            opacity: 0;
+            animation: fadeIn 2s ease 4s forwards;
+        }
+
+        /* --- Content Sections --- */
+        .content-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .process-item:hover {
+            transform: scale(1.02);
+        }
+
+        .process-item .icon {
+            color: var(--accent-color);
+            font-size: 2rem;
+            width: 60px;
+            text-align: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            padding-top: 5px;
+            text-shadow: 0 0 10px var(--shadow-color);
+        }
+        
+        .process-text h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+        
+        .process-text p {
+            margin: 0;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        .price-display {
+            text-align: center;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            color: var(--accent-color);
+            text-shadow: 0 0 15px var(--shadow-color);
+        }
+        .price-display span {
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.5rem;
+            color: #ccc;
+            font-weight: 300;
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-header h1 { font-size: 2.5rem; }
+            .hero-header .tagline { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="hero-header">
+            <h1>Unlock Clarity & Direction.</h1>
+            <p class="tagline">A personal consultation to accelerate your journey.</p>
+        </header>
+
+        <div class="content-box animate-on-scroll">
+            <p class="intro-text">
+                Sometimes, a direct conversation is the most powerful tool for progress. Whether you're stuck on a technical problem, planning a new project, or seeking career advice, this one-on-one session is your opportunity to gain direct access to my expertise.
+            </p>
+        </div>
+
+        <div class="content-box animate-on-scroll">
+            <h2><i class="fas fa-bullseye"></i> What We Can Achieve Together</h2>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-lightbulb"></i></div>
+                <div class="process-text">
+                    <h3>Project Strategy</h3>
+                    <p>Brainstorm your next big idea. I'll help you refine your concept, identify potential challenges, and create a clear, actionable plan for success.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-wrench"></i></div>
+                <div class="process-text">
+                    <h3>Technical Problem-Solving</h3>
+                    <p>Stuck on a specific coding or security problem? We can work through it together, saving you hours of frustration and research.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-compass"></i></div>
+                <div class="process-text">
+                    <h3>Career & Skill Guidance</h3>
+                    <p>Looking for direction in your tech or cybersecurity career? Get personalized advice on what skills to learn, where to focus, and how to build your personal brand.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-box animate-on-scroll">
+            <h2><i class="fas fa-dollar-sign"></i> Investment</h2>
+            <div class="price-display">$20 <span>/ 30 Minutes</span></div>
+            <p style="text-align: center; color: #ccc;">A small investment for dedicated, expert guidance to propel you forward.</p>
+        </div>
+
+        <div class="actions animate-on-scroll">
+            <a href="payments.html" class="cta-button">Book Your Session Now</a>
+            <a href="index.html" class="back-link">← Back to All Products</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>

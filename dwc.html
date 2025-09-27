@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dark Web Course - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+            --warning-color: #ff4757; /* Changed to red for stronger warning */
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-shadow: 0 0 15px var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .header .price-tag {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+
+        @media (min-width: 768px) {
+            .content-grid {
+                grid-template-columns: 2fr 1fr; /* Make main content wider */
+            }
+        }
+
+        .content-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .features-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .features-list li {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            font-size: 1.1rem;
+        }
+
+        .features-list i {
+            color: var(--accent-color);
+            margin-right: 15px;
+            font-size: 1.2rem;
+            width: 20px;
+            text-align: center;
+        }
+        
+        .disclaimer-box {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .disclaimer-list {
+            list-style-type: none;
+            padding-left: 0;
+        }
+        
+        .disclaimer-list li {
+            padding-left: 25px;
+            position: relative;
+            margin-bottom: 15px;
+        }
+        
+        .disclaimer-list li::before {
+            content: '🛑';
+            position: absolute;
+            left: 0;
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Dark Web Exploration Course</h1>
+            <div class="price-tag"></div>
+        </header>
+
+        <div class="content-grid">
+            <div class="content-box">
+                <h2><i class="fas fa-user-secret"></i> What You Will Learn</h2>
+                <ul class="features-list">
+                    <li><i class="fas fa-shield-alt"></i> <strong>Operational Security (OpSec):</strong> Master the techniques for maintaining absolute anonymity and protecting your identity online.</li>
+                    <li><i class="fas fa-project-diagram"></i> <strong>Understanding Tor:</strong> Learn the architecture of The Onion Router and how it provides anonymous communication.</li>
+                    <li><i class="fab fa-bitcoin"></i> <strong>Cryptocurrency Privacy:</strong> Get a foundational understanding of how currencies like Bitcoin and Monero are used for transactions.</li>
+                    <li><i class="fas fa-search"></i> <strong>Safe Navigation:</strong> Discover how to safely browse and conduct research on hidden services, forums, and marketplaces.</li>
+                    <li><i class="fas fa-exclamation-triangle"></i> <strong>Threat Identification:</strong> Learn to recognize and avoid common scams, traps, and malicious actors in the hidden internet.</li>
+                    <li><i class="fas fa-shoe-prints"></i> <strong>Minimizing Digital Footprints:</strong> Understand the tools and methods used to erase your digital traces and ensure privacy.</li>
+                </ul>
+            </div>
+
+            <div class="content-box disclaimer-box">
+                <h2><i class="fas fa-gavel"></i> Course Disclaimer</h2>
+                <ul class="disclaimer-list">
+                    <li>This course is for **educational and research purposes only**.</li>
+                    <li>The skills taught are to help you understand digital privacy and security threats, not to engage in them.</li>
+                    <li>Trend Hive Academy does not condone any illegal activity.</li>
+                    <li>There is a strict **No Refund Policy**.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="payments.html" class="cta-button">Enroll Now</a>
+            <a href="index.html" class="back-link">← Back to All Products</a>
+        </div>
+    </div>
+
+</body>
+</html>

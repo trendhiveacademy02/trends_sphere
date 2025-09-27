@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Methods - Trend's Sphere</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #f0f0f0;
+            --secondary-color: #121212;
+            --accent-color: #007bff;
+            --card-bg: #1e1e1e;
+            --border-color: #333;
+            --warning-bg: rgba(255, 204, 0, 0.1);
+            --warning-border: rgba(255, 204, 0, 0.5);
+            --info-bg: rgba(0, 123, 255, 0.1);
+            --info-border: rgba(0, 123, 255, 0.5);
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid var(--border-color);
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInContainer 0.8s forwards ease-out;
+        }
+
+        @keyframes fadeInContainer {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            color: var(--primary-color);
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 20px;
+        }
+
+        /* --- Currency Note --- */
+        .currency-note {
+            padding: 15px;
+            background: var(--info-bg);
+            border: 1px solid var(--info-border);
+            border-radius: 8px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        .currency-note h3 {
+            color: #33aaff;
+            margin-bottom: 10px;
+        }
+        .currency-note p {
+            color: #ccc;
+            margin: 0;
+        }
+
+        .payment-method {
+            margin-bottom: 25px;
+            background: rgba(0,0,0,0.2);
+            padding: 20px;
+            border-radius: 8px;
+            opacity: 0;
+            transform: scale(0.95);
+            animation: fadeInCard 0.6s forwards ease-out;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .payment-method:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.5);
+        }
+        
+        .payment-method:nth-child(2) { animation-delay: 0.1s; }
+        .payment-method:nth-child(3) { animation-delay: 0.2s; }
+        .payment-method:nth-child(4) { animation-delay: 0.3s; }
+        .payment-method:nth-child(5) { animation-delay: 0.4s; }
+
+
+        @keyframes fadeInCard {
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .payment-method h2 {
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+        
+        .payment-entry {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        @media(min-width: 600px){
+            .payment-entry {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+
+        .payment-entry strong {
+            font-weight: 600;
+            color: #ccc;
+            flex-shrink: 0;
+            margin-right: 10px;
+        }
+
+        .payment-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            background: rgba(0,0,0,0.4);
+            padding: 10px;
+            border-radius: 5px;
+            word-wrap: break-word;
+            flex-grow: 1;
+        }
+        
+        .payment-info p {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.1rem;
+            margin: 0;
+            flex-grow: 1;
+            word-break: break-all;
+        }
+
+        .copy-btn {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 8px 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            font-weight: 600;
+        }
+        .copy-btn:hover { background-color: #0056b3; }
+        .copy-btn:active { transform: scale(0.95); }
+
+        .important-note {
+            margin-top: 40px;
+            padding: 20px;
+            background: var(--warning-bg);
+            border: 1px solid var(--warning-border);
+            border-radius: 8px;
+        }
+
+        .important-note h3 {
+            color: #ffcc00;
+            margin-bottom: 15px;
+            text-align: center;
+        }
+        
+        .important-note p {
+            color: #eee;
+            margin-bottom: 10px;
+        }
+
+        .contact-info {
+            font-weight: bold;
+            color: #00bfff;
+        }
+        
+        .back-link {
+            display: block;
+            text-align: center;
+            margin-top: 30px;
+            color: var(--accent-color);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>Official Payment Methods</h1>
+
+        <div class="currency-note">
+            <h3>For Indian Users (INR Payments)</h3>
+            <p>Please use a fixed conversion rate of <strong>$1 USD = ₹100 INR</strong>. <br>(Example: A $25 plan is ₹2500).</p>
+        </div>
+
+        <div class="payment-method">
+            <h2>UPI</h2>
+            <div class="payment-entry">
+                <strong>ID:</strong>
+                <div class="payment-info">
+                    <p id="upi-id">raj.n@fam</p>
+                    <button class="copy-btn" onclick="copyToClipboard('upi-id')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+        <div class="payment-method">
+            <h2>Binance Pay</h2>
+             <div class="payment-entry">
+                <strong>ID & Name:</strong>
+                <div class="payment-info">
+                    <p id="binance-id">1020747505 | Name: Nitin Raj 007</p>
+                    <button class="copy-btn" onclick="copyToClipboard('binance-id')">Copy</button>
+                </div>
+            </div>
+        </div>
+        
+        <div class="payment-method">
+            <h2>Cryptocurrency</h2>
+            <div class="payment-entry">
+                <strong>BTC (Bitcoin):</strong>
+                <div class="payment-info">
+                    <p id="btc-addr">1H5y7apiCdDg6ydFnePaMB3umRVxTWazw1</p>
+                    <button class="copy-btn" onclick="copyToClipboard('btc-addr')">Copy</button>
+                </div>
+            </div>
+            <div class="payment-entry">
+                <strong>USDT (BSC BEP-20):</strong>
+                <div class="payment-info">
+                    <p id="usdt-addr">0xaf3361314ff2f9f591c816a1ff453acd50e13660</p>
+                    <button class="copy-btn" onclick="copyToClipboard('usdt-addr')">Copy</button>
+                </div>
+            </div>
+            <div class="payment-entry">
+                <strong>LTC (Litecoin):</strong>
+                <div class="payment-info">
+                    <p id="ltc-addr">LbrN1Y5zusqg6CtrB2WXQeyB2VHsifoozL</p>
+                    <button class="copy-btn" onclick="copyToClipboard('ltc-addr')">Copy</button>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="important-note">
+            <h3>⚠️ IMPORTANT: PLEASE READ CAREFULLY</h3>
+            <p>Please <strong>only</strong> use the payment methods listed above. All official payment accounts are registered under the name <strong>Nitin Raj</strong>.</p>
+            <p>Do not trust anyone claiming to be from "Trend's Sphere" or "Trend Hive" asking for payment to a different account. We are not responsible for payments made to any other accounts.</p>
+            <p>
+                Always verify on Telegram before making a payment.
+                My official Telegram username is <span class="contact-info">@trendhiveacademy</span> and my contact number is <span class="contact-info">9204465448</span>.
+            </p>
+            <p>After payment, please send a screenshot to me on <strong>WhatsApp or Telegram</strong> to confirm your purchase.</p>
+        </div>
+        
+        <a href="index.html" class="back-link">← Back to Home</a>
+    </div>
+
+    <script>
+        function copyToClipboard(elementId) {
+            const element = document.getElementById(elementId);
+            const textToCopy = element.innerText;
+            
+            const tempTextArea = document.createElement('textarea');
+            tempTextArea.value = textToCopy;
+            document.body.appendChild(tempTextArea);
+            tempTextArea.select();
+            document.execCommand('copy');
+            document.body.removeChild(tempTextArea);
+
+            const allButtons = document.querySelectorAll('.copy-btn');
+            allButtons.forEach(btn => {
+                if(btn.originalText) {
+                    btn.innerText = btn.originalText;
+                }
+            });
+            
+            const button = document.querySelector(`[onclick="copyToClipboard('${elementId}')"]`);
+            if(!button.originalText) {
+                 button.originalText = button.innerText;
+            }
+            button.innerText = 'Copied!';
+
+            setTimeout(() => {
+                button.innerText = button.originalText;
+            }, 2000);
+        }
+    </script>
+</body>
+</html>
+

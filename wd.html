@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Website Development Service - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* --- Animations --- */
+        .animate-on-scroll {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        }
+
+        .animate-on-scroll.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Hero Section --- */
+        .hero-header {
+            text-align: center;
+            min-height: 80vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .hero-header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            text-shadow: 0 0 15px var(--shadow-color);
+            margin-bottom: 20px;
+            border-right: .15em solid var(--accent-color);
+            white-space: nowrap;
+            overflow: hidden;
+            animation: typing 3.5s steps(30, end), blink-caret .75s step-end infinite;
+        }
+
+        /* Typing effect */
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: var(--accent-color); }
+        }
+
+        .hero-header .tagline {
+            font-size: 1.5rem;
+            font-weight: 300;
+            color: #ccc;
+            opacity: 0;
+            animation: fadeIn 2s ease 4s forwards;
+        }
+
+        /* --- Content Sections --- */
+        .content-box {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 40px;
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 30px;
+            font-size: 2rem;
+            text-align: center;
+        }
+
+        .process-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            transition: transform 0.3s ease;
+        }
+        
+        .process-item:hover {
+            transform: scale(1.02);
+        }
+
+        .process-item .icon {
+            color: var(--accent-color);
+            font-size: 2rem;
+            width: 60px;
+            text-align: center;
+            margin-right: 20px;
+            flex-shrink: 0;
+            padding-top: 5px;
+            text-shadow: 0 0 10px var(--shadow-color);
+        }
+        
+        .process-text h3 {
+            margin: 0 0 10px 0;
+            font-size: 1.5rem;
+        }
+        
+        .process-text p {
+            margin: 0;
+            color: #ccc;
+            line-height: 1.6;
+        }
+        
+        .intro-text {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            text-align: center;
+        }
+        
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+        @media (max-width: 768px) {
+            .hero-header h1 { font-size: 2.5rem; }
+            .hero-header .tagline { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="hero-header">
+            <h1>Your Digital Legacy Starts Here.</h1>
+            <p class="tagline">I don't just build websites. I build the home for your vision.</p>
+        </header>
+
+        <div class="content-box animate-on-scroll">
+            <p class="intro-text">
+                An idea is just a whisper until it has a place to live. A powerful online presence is no longer a luxury—it's the foundation of your legacy. I specialize in translating your unique vision into a fast, secure, and unforgettable web experience that captivates and converts.
+            </p>
+        </div>
+
+        <div class="content-box animate-on-scroll">
+            <h2><i class="fas fa-cogs"></i> My Creation Process</h2>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-comments"></i></div>
+                <div class="process-text">
+                    <h3>1. Vision & Strategy</h3>
+                    <p>It starts with a conversation. I listen to your goals, your audience, and your brand's story. Together, we forge a design blueprint and a clear roadmap for a website that doesn't just look good, but performs flawlessly.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-code"></i></div>
+                <div class="process-text">
+                    <h3>2. Craftsmanship & Review</h3>
+                    <p>This is where the vision is forged in code. I build your website with clean, modern, and scalable technology. You get a private link to review progress and provide feedback, ensuring the final product is a perfect reflection of your idea.</p>
+                </div>
+            </div>
+            <div class="process-item">
+                <div class="icon"><i class="fas fa-rocket"></i></div>
+                <div class="process-text">
+                    <h3>3. Launch & Empowerment</h3>
+                    <p>After final approval, I handle the full deployment, making your vision live to the world. You receive all the credentials, plus a personal guide for making basic updates, empowering you to take control of your new digital home.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-box animate-on-scroll">
+            <h2><i class="fas fa-th-large"></i> What We Can Build Together</h2>
+             <div class="process-item">
+                <div class="icon"><i class="fas fa-user-circle"></i></div>
+                <div class="process-text">
+                    <h3>Digital Portfolios</h3>
+                    <p>Showcase your work, skills, and personal brand with a stunning online portfolio that commands attention.</p>
+                </div>
+            </div>
+             <div class="process-item">
+                <div class="icon"><i class="fas fa-briefcase"></i></div>
+                <div class="process-text">
+                    <h3>Business Platforms</h3>
+                    <p>Create a credible and professional front door for your business designed to attract clients and build unwavering trust.</p>
+                </div>
+            </div>
+             <div class="process-item">
+                <div class="icon"><i class="fas fa-shopping-cart"></i></div>
+                <div class="process-text">
+                    <h3>E-commerce Experiences</h3>
+                    <p>Launch an online store with a secure, beautiful, and easy-to-manage platform that turns visitors into loyal customers.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions animate-on-scroll">
+            <a href="payments.html" class="cta-button">Book a Consultation</a>
+            <a href="index.html" class="back-link">← Back to All Products</a>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const animatedElements = document.querySelectorAll('.animate-on-scroll');
+
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.1
+            });
+
+            animatedElements.forEach(el => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
+

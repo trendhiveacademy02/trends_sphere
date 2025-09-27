@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Advanced Digital Toolkit - Trend's Sphere</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600;700&display=swap');
+
+        :root {
+            --primary-color: #f0f0f0;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: #1a1a1a;
+            --border-color: #2a2a2a;
+            --highlight-color: #28a745;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        /* --- Hero Section --- */
+        .hero {
+            text-align: center;
+            padding: 60px 0;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeInHero 1s forwards ease-out;
+        }
+
+        @keyframes fadeInHero {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .hero h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3.5rem;
+            margin-bottom: 15px;
+            background: linear-gradient(90deg, #007bff, #ffffff, #4f8ff7);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 5s linear infinite;
+        }
+
+        .hero p.subtitle {
+            font-size: 1.2rem;
+            color: #ccc;
+            max-width: 700px;
+            margin: 0 auto 20px;
+        }
+
+        .language-info {
+            display: inline-block;
+            background-color: rgba(40, 167, 69, 0.1);
+            border: 1px solid var(--highlight-color);
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-size: 1rem;
+            font-weight: 600;
+            color: var(--highlight-color);
+            margin-bottom: 30px;
+        }
+
+        .btn-video {
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            background-color: #c4302b;
+            color: white;
+            transition: all 0.3s ease;
+            margin-bottom: 50px;
+            border: 1px solid #c4302b;
+        }
+        .btn-video:hover {
+            background-color: #e04a44;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(196, 48, 43, 0.5);
+        }
+        
+        /* --- Content Section --- */
+        .content-section {
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 15px;
+            margin-bottom: 50px;
+            border: 1px solid var(--border-color);
+        }
+
+        .content-section h2 {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 30px;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+        }
+
+        .learn-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 20px;
+        }
+
+        @media(min-width: 768px) {
+            .learn-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+         @media(min-width: 1024px) {
+            .learn-grid { grid-template-columns: repeat(3, 1fr); }
+        }
+
+        .learn-item {
+            background: rgba(0,0,0,0.3);
+            padding: 20px;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent-color);
+            opacity: 0;
+            transform: scale(0.9);
+            animation: zoomIn 0.5s forwards ease-out;
+            color: #bbb;
+        }
+        
+        .learn-item:nth-child(1) { animation-delay: 0.1s; }
+        .learn-item:nth-child(2) { animation-delay: 0.2s; }
+        .learn-item:nth-child(3) { animation-delay: 0.3s; }
+        .learn-item:nth-child(4) { animation-delay: 0.4s; }
+        .learn-item:nth-child(5) { animation-delay: 0.5s; }
+        .learn-item:nth-child(6) { animation-delay: 0.6s; }
+        .learn-item:nth-child(7) { animation-delay: 0.7s; }
+        .learn-item:nth-child(8) { animation-delay: 0.8s; }
+        .learn-item:nth-child(9) { animation-delay: 0.9s; }
+        .learn-item:nth-child(10) { animation-delay: 1.0s; }
+
+
+        @keyframes zoomIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+        
+        /* --- Pricing Plans Section --- */
+        .pricing-section {
+            text-align: center; margin-bottom: 50px;
+        }
+        .pricing-section h2 {
+            font-size: 2.5rem; margin-bottom: 40px;
+        }
+
+        .plans-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 30px;
+            perspective: 2000px;
+        }
+        
+        .plan-card {
+            width: 320px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.5s;
+            transform-style: preserve-3d;
+        }
+
+        .plans-container:hover .plan-card { transform: rotateY(25deg); }
+        .plans-container .plan-card:hover {
+            transform: rotateY(0) scale(1.1) translateZ(50px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.7);
+        }
+        .plans-container .plan-card:hover ~ .plan-card { transform: rotateY(-25deg); }
+
+        .plan-card.highlight { border-color: var(--highlight-color); }
+        .plan-card h3 { font-size: 1.8rem; margin-bottom: 10px; }
+        .plan-card .price {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 5px;
+        }
+        .plan-card .price-term {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+        .plan-card ul { list-style: none; padding: 0; margin-bottom: 30px; text-align: left; }
+        .plan-card ul li { margin-bottom: 10px; color: #bbb; }
+        .plan-card ul li::before {
+            content: '✓';
+            color: var(--highlight-color);
+            font-weight: bold;
+            display: inline-block;
+            width: 1.2em;
+        }
+        
+        .btn-select {
+            display: block; width: 100%; padding: 15px; border-radius: 8px;
+            text-decoration: none; font-weight: 600; font-size: 1.1rem;
+            background-color: var(--accent-color); color: white; transition: all 0.3s ease;
+        }
+        .btn-select:hover {
+            transform: translateY(-3px); box-shadow: 0 5px 15px rgba(0, 123, 255, 0.5);
+        }
+        .btn-select.highlight { background-color: var(--highlight-color); }
+        .btn-select.highlight:hover { box-shadow: 0 5px 15px rgba(40, 167, 69, 0.5); }
+
+        .back-link {
+            display: block; text-align: center; margin-top: 40px; color: var(--accent-color);
+            text-decoration: none; font-weight: 600; transition: letter-spacing 0.3s;
+        }
+        .back-link:hover { text-decoration: underline; letter-spacing: 1px; }
+
+        @keyframes textShine { to { background-position: 200% center; } }
+        
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .plans-container:hover .plan-card,
+            .plans-container .plan-card:hover,
+            .plans-container .plan-card:hover ~ .plan-card { transform: none; }
+            .plan-card:hover {
+                transform: translateY(-10px) scale(1.05) !important;
+                box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
+            }
+        }
+        @media (max-width: 767px) {
+            .hero h1 { font-size: 2.5rem; }
+            .hero p.subtitle { font-size: 1rem; }
+            .content-section h2, .pricing-section h2 { font-size: 2rem; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="hero">
+            <h1>Advanced Digital Toolkit</h1>
+            <p class="subtitle">An intensive, practical-only program designed to provide a deep understanding of modern digital techniques and security.</p>
+            <div class="language-info">Full Course Available in Both English & Hindi</div>
+            <a href="https://youtu.be/Y7XU2y8v9YU?si=25K9qP3nJr5ONkkS" target="_blank" class="btn-video">Watch Overview Video</a>
+        </header>
+
+        <main>
+            <section class="content-section">
+                <h2>What You'll Learn (Practical Only)</h2>
+                <div class="learn-grid">
+                    <div class="learn-item">📱 Phishing via Phone</div>
+                    <div class="learn-item">🦀 Mobile RAT Creation</div>
+                    <div class="learn-item">📩 SMS/Email Spamming</div>
+                    <div class="learn-item">♻️ Trial BIN Techniques</div>
+                    <div class="learn-item">🔍 Google Dorking</div>
+                    <div class="learn-item">⚡ SQLMap for Dumps</div>
+                    <div class="learn-item">🤖 Telegram CC Generator</div>
+                    <div class="learn-item">📍 Maps Phishing + Social Engineering</div>
+                    
+                    <div class="learn-item"><strong>Bonus:</strong> Legal & Low-Investment Business Ideas</div>
+                </div>
+            </section>
+            
+            <section class="pricing-section">
+                <h2>Choose Your Plan</h2>
+                <div class="plans-container">
+                    <div class="plan-card">
+                        <h3>BASIC</h3>
+                        <div class="price">$25</div>
+                        <div class="price-term">One-Time</div>
+                        <ul>
+                            <li>Daily Private BINs</li>
+                            <li>All Methods & Tricks</li>
+                            <li>1 Business Idea</li>
+                        </ul>
+                        <a href="payments.html" class="btn-select">Select Plan</a>
+                    </div>
+                    <div class="plan-card highlight">
+                        <h3>STANDARD</h3>
+                        <div class="price">$40</div>
+                        <div class="price-term">$10 per Week</div>
+                        <ul>
+                            <li>Everything in BASIC</li>
+                            <li><strong>Advanced Tool Scripts</strong></li>
+                            <li><strong>2 Business Ideas</strong></li>
+                        </ul>
+                        <a href="payments.html" class="btn-select highlight">Most Popular</a>
+                    </div>
+                    <div class="plan-card">
+                        <h3>PREMIUM</h3>
+                        <div class="price">$60</div>
+                        <div class="price-term">$15 per Week</div>
+                         <ul>
+                            <li>Everything in STANDARD</li>
+                            <li><strong>3 Business Ideas (1 per Week)</strong></li>
+                            <li>Priority Support</li>
+
+                        </ul>
+                        <a href="payments.html" class="btn-select">Select Plan</a>
+                    </div>
+                </div>
+            </section>
+
+             <a href="index.html" class="back-link">← Back to Home</a>
+        </main>
+    </div>
+</body>
+</html>
+

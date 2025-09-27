@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #000000;
+            --accent-color: #007bff;
+            --heart-color: #ff4757;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+            --section-bg: rgba(10, 10, 10, 0.8);
+            --card-width: 300px;
+            --card-height: 420px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            min-width: 100%;
+            min-height: 100%;
+            width: auto;
+            height: auto;
+            z-index: -1;
+            transform: translateX(-50%) translateY(-50%);
+            background-size: cover;
+            filter: brightness(0.3) blur(2px);
+        }
+        
+        .section-wrapper {
+            padding: 60px 20px;
+            background: var(--section-bg);
+            backdrop-filter: blur(5px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+        }
+        
+        h2.section-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            text-align: center;
+            margin-bottom: 40px;
+            text-shadow: 0 0 15px var(--accent-color);
+        }
+
+        /* --- Header & Hero Section --- */
+        .hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+
+        .header {
+            width: 100%;
+            text-align: center;
+            padding: 20px;
+            z-index: 10;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 2.5rem;
+            letter-spacing: 2px;
+            background: linear-gradient(90deg, #4f8ff7, #ffffff, #007bff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: textShine 5s linear infinite, glow 1.5s ease-in-out infinite alternate;
+        }
+        
+        .navbar a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 600;
+            transition: color 0.3s;
+        }
+        
+        .navbar a:hover {
+            color: var(--accent-color);
+            text-shadow: 0 0 5px var(--accent-color);
+        }
+
+        @keyframes textShine { to { background-position: 200% center; } }
+        @keyframes glow {
+            from { text-shadow: 0 0 10px #fff, 0 0 20px #fff, 0 0 30px #007bff, 0 0 40px #007bff; }
+            to { text-shadow: 0 0 20px #fff, 0 0 30px #4f8ff7, 0 0 40px #4f8ff7, 0 0 50px #4f8ff7; }
+        }
+
+        .carousel-wrapper {
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 100%;
+            position: relative;
+            perspective: 1200px;
+        }
+
+        /* --- CAROUSEL STYLES --- */
+        .products-container { width: var(--card-width); height: var(--card-height); position: relative; transform-style: preserve-3d; }
+        .product-card { width: 100%; height: 100%; background: var(--card-bg); border-radius: 15px; border: 1px solid rgba(255, 255, 255, 0.1); box-shadow: 0 10px 30px rgba(0, 0, 0, 0.7); backdrop-filter: blur(12px); display: flex; flex-direction: column; padding: 20px; text-align: center; position: absolute; opacity: 0; transition: transform 0.6s ease, opacity 0.6s ease, z-index 0s 0.3s; }
+        .product-card.active { transform: translateX(0) scale(1); opacity: 1; z-index: 10; }
+        .product-card.prev { transform: translateX(-45%) scale(0.85); opacity: 0.6; z-index: 5; }
+        .product-card.next { transform: translateX(45%) scale(0.85); opacity: 0.6; z-index: 5; }
+        .product-card.hidden-prev { transform: translateX(-75%) scale(0.7); opacity: 0; z-index: 1; }
+        .product-card.hidden-next { transform: translateX(75%) scale(0.7); opacity: 0; z-index: 1; }
+        
+        .product-card img { 
+            width: 100%; 
+            height: 150px; /* Adjusted height for price */
+            object-fit: contain;
+            border-radius: 10px; 
+            margin-bottom: 10px; 
+        }
+        
+        .product-card h3 { font-size: 1.4rem; margin-bottom: 5px; line-height: 1.2; }
+        
+        .product-card .price {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            text-shadow: 0 0 8px var(--shadow-color);
+        }
+
+        .product-card p { font-size: 0.85rem; color: rgba(255, 255, 255, 0.8); margin-bottom: 15px; flex-grow: 1; }
+        .card-buttons { display: flex; gap: 10px; width: 100%; }
+        .card-buttons a { flex: 1; padding: 12px; border-radius: 8px; text-decoration: none; color: var(--primary-color); font-weight: 600; cursor: pointer; transition: all 0.3s ease; text-align: center; }
+        .btn-buy { background-color: var(--accent-color); box-shadow: 0 0 10px var(--shadow-color); }
+        .btn-buy:hover { background-color: #0056b3; box-shadow: 0 0 20px var(--shadow-color); }
+        .btn-details { background-color: rgba(255, 255, 255, 0.2); }
+        .btn-details:hover { background-color: rgba(255, 255, 255, 0.4); }
+        .nav-button { position: absolute; top: 50%; transform: translateY(-50%); z-index: 100; background-color: rgba(255, 255, 255, 0.1); border: 1px solid rgba(255, 255, 255, 0.3); color: white; font-size: 2rem; width: 50px; height: 50px; border-radius: 50%; cursor: pointer; display: flex; justify-content: center; align-items: center; backdrop-filter: blur(5px); transition: background-color 0.3s; }
+        .nav-button:hover { background-color: rgba(255, 255, 255, 0.3); }
+        #prev-btn { left: 20px; }
+        #next-btn { right: 20px; }
+
+        /* --- Trust Vote Section --- */
+        #trust-vote { text-align: center; }
+        .heart-container { position: relative; display: inline-block; }
+        .heart-icon { font-size: 100px; color: var(--heart-color); cursor: pointer; transition: transform 0.2s ease, filter 0.3s; }
+        .heart-icon:hover { transform: scale(1.1); filter: drop-shadow(0 0 15px var(--heart-color)); }
+        .heart-icon.voted { color: #c0392b; cursor: not-allowed; animation: heart-pop 0.5s ease; }
+        #like-count { font-size: 2rem; font-weight: 700; display: block; margin-top: 10px; }
+
+        @keyframes heart-pop {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* --- Contact Section --- */
+        #contact { text-align: center; }
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+        .contact-card {
+            background: rgba(255,255,255,0.05);
+            padding: 20px;
+            border-radius: 8px;
+        }
+        .contact-card i { font-size: 2rem; color: var(--accent-color); margin-bottom: 15px; }
+        .contact-card a { color: var(--primary-color); text-decoration: none; word-break: break-all; }
+        .safety-notice {
+            margin-top: 40px;
+            padding: 20px;
+            border: 1px solid #ffc107;
+            border-radius: 8px;
+            background: rgba(255, 193, 7, 0.1);
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .safety-notice h3 { color: #ffc107; margin-bottom: 10px; }
+
+        /* --- RESPONSIVE STYLES --- */
+        @media (max-width: 768px) {
+            .hero { height: auto; padding-bottom: 50px; }
+            .header { flex-direction: column; }
+            .navbar { margin-top: 15px; }
+            .carousel-wrapper { perspective: none; }
+            .products-container { display: flex; overflow-x: scroll; scroll-snap-type: x mandatory; scrollbar-width: none; width: 100%; height: auto; transform-style: flat; }
+            .products-container::-webkit-scrollbar { display: none; }
+            .product-card { position: static; transform: none !important; flex-shrink: 0; width: 80vw; max-width: 300px; scroll-snap-align: center; margin: 0 10px; opacity: 1; }
+            .nav-button { display: none; }
+        }
+    </style>
+</head>
+<body>
+
+    <video autoplay muted loop id="bg-video">
+        <source src="bg.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <main>
+        <section class="hero">
+            <header class="header">
+                <h1>Trend's Sphere</h1>
+                <nav class="navbar">
+                    <a href="#products">Products</a>
+                    <a href="#trust-vote">Trust Vote</a>
+                    <a href="#contact">Contact</a>
+                </nav>
+            </header>
+            <div class="carousel-wrapper" id="products">
+                <div class="products-container">
+                    <!-- All 10 product cards are here -->
+                    <div class="product-card"> <img src="28days.png" alt="Product 1"> <h3>28 Days to Master The Unspoken Internet 🔥</h3><div class="price">Choose any plan from details section</div> <p>Fast-track your cyber skills: 28 days of practical, ethical hacking & digital safety for career-ready results. 🚀🔒👨‍💻</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="28days.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="enroll.png" alt="Product 2"> <h3>Enroll</h3><div class="price">$55(Starting Price)</div> <p>✨🔥 Best & High Quality Enrolls 🔥✨, DM to get the actual price</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="enroll.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="dwc.png" alt="Product 3"> <h3>Dark Web Course</h3><div class="price">$6</div> <p>🕵️‍♂️ Dive into the hidden world with our Dark Web Course 🌐<br>🔐 Learn secrets, tools & skills to explore safely and smartly!</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="dwc.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="smm.png" alt="Product 4"> <h3>How to make your own SMM Panel Course</h3><div class="price">$2</div> <p>📱 Learn to build your own powerful SMM panel 🌍<br>⚡ Automate services & grow your digital empire!</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="smm.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="bin.png" alt="Product 5"> <h3>Binning Course</h3><div class="price">$5</div> <p>💳 Master the art of taking free trails with step-by-step lessons 📘<br>🚀 Boost your skills and stay ahead in the game!</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="bin.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="bhc.png" alt="Product 6"> <h3>Basic Hacking Course</h3><div class="price">$6</div> <p>🖥️ Kickstart your hacking journey from zero ➡️ pro 🔥<br>🔐 Learn tools, techniques & real-world applications.</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="bhc.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="cps.png" alt="Product 7"> <h3>Custom Python Script</h3><div class="price">From $30</div> <p>🐍 Get tailored Python scripts for your projects ⚙️<br>⚡ Fast, efficient & built exactly for your needs.</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="cps.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="cpt.png" alt="Product 8"> <h3>Custom Python Tool</h3><div class="price">From $30</div> <p>🛠️ Unique Python tools made just for you 🎯<br>🤖 Automate tasks & simplify complex processes.</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="cpt.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="wd.png" alt="Product 9"> <h3>Website Development</h3><div class="price">From $30</div> <p>🌐 Professional websites crafted to perfection 💻<br>📈 Boost your online presence with modern designs.</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="wd.html" class="btn-details">View Details</a> </div> </div>
+                    <div class="product-card"> <img src="book.png" alt="Product 10"> <h3>Talk To Trend Hive(Book Meeting)</h3><div class="price">$3</div> <p>📞 Schedule a 1-on-1 with Trend Hive Academy 🤝<br>💡 Get guidance, ideas & solutions tailored for you!</p> <div class="card-buttons"> <a href="payments.html" class="btn-buy">Buy Now</a> <a href="book.html" class="btn-details">View Details</a> </div> </div>
+                </div>
+                <button class="nav-button" id="prev-btn">‹</button>
+                <button class="nav-button" id="next-btn">›</button>
+            </div>
+        </section>
+
+        <section id="trust-vote" class="section-wrapper">
+            <div class="container">
+                <h2 class="section-title">Show Your Support</h2>
+                <p style="text-align: center; margin-bottom: 20px;">If you like and trust Trend Hive Academy, click the heart to vote!</p>
+                <div class="heart-container">
+                    <i class="fas fa-heart heart-icon" id="heart-btn"></i>
+                </div>
+                <span id="like-count">0</span>
+            </div>
+        </section>
+
+        <section id="contact" class="section-wrapper">
+            <div class="container">
+                 <h2 class="section-title">Get In Touch</h2>
+                 <div class="contact-grid">
+                     <div class="contact-card">
+                         <i class="fab fa-whatsapp"></i>
+                         <h3>WhatsApp</h3>
+                         <p>9204465448</p>
+                     </div>
+                     <div class="contact-card">
+                         <i class="fab fa-telegram-plane"></i>
+                         <h3>Telegram</h3>
+                         <a href="https://t.me/trendhiveacademy" target="_blank">@trendhiveacademy</a>
+                     </div>
+                     <div class="contact-card">
+                         <i class="fab fa-instagram"></i>
+                         <h3>Instagram</h3>
+                         <a href="https://www.instagram.com/trendhiveacademy/" target="_blank">@trendhiveacademy</a>
+                     </div>
+                      <div class="contact-card">
+                         <i class="fas fa-link"></i>
+                         <h3>All Official Links</h3>
+                         <a href="https://trendhiveacademy.blogspot.com/2024/10/trend-hive-academy-unlocking-digital.html" target="_blank">trendhiveacademy.blogspot.com</a>
+                     </div>
+                 </div>
+                 <div class="safety-notice">
+                     <h3>🔒 Stay Safe!</h3>
+                     <p>Always verify my identity using only the official links shared above. Scammers are active, so double-check the name, number, and payment method – it's always Nitin Raj only. Do not trust any other name or method pretending to be Trend Hive Academy.</p>
+                 </div>
+            </div>
+        </section>
+    </main>
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+        import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+        const firebaseConfig = {
+          apiKey: "AIzaSyCTHasE4U5ioHJjyiHWwSjxUKYl-VngFbg",
+          authDomain: "trust-vote-3bbd6.firebaseapp.com",
+          databaseURL: "https://trust-vote-3bbd6-default-rtdb.firebaseio.com",
+          projectId: "trust-vote-3bbd6",
+          storageBucket: "trust-vote-3bbd6.firebasestorage.app",
+          messagingSenderId: "626684828013",
+          appId: "1:626684828013:web:a3cb02b4f9227752b6a264",
+          measurementId: "G-DWC6YHNDXY"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- VOTE LOGIC ---
+        const likeCountEl = document.getElementById('like-count');
+        const heartBtn = document.getElementById('heart-btn');
+        const voteDocRef = doc(db, "votes", "likeCounter");
+
+        // Listen for real-time updates on the like count
+        onSnapshot(voteDocRef, (docSnap) => {
+            if (docSnap.exists()) {
+                likeCountEl.textContent = docSnap.data().count || 0;
+            } else {
+                // If the document doesn't exist, create it.
+                setDoc(voteDocRef, { count: 0 });
+                likeCountEl.textContent = 0;
+            }
+        });
+
+        // Check if user has already voted
+        if (localStorage.getItem('hasVoted') === 'true') {
+            heartBtn.classList.add('voted');
+        }
+
+        heartBtn.addEventListener('click', async () => {
+            if (heartBtn.classList.contains('voted')) {
+                return; // Already voted
+            }
+
+            // Increment the count in Firestore
+            await updateDoc(voteDocRef, {
+                count: increment(1)
+            });
+
+            // Mark as voted and play animation
+            heartBtn.classList.add('voted');
+            localStorage.setItem('hasVoted', 'true');
+        });
+
+    </script>
+    
+    <script>
+        // --- CAROUSEL LOGIC ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (window.innerWidth <= 768) return;
+
+            const cards = Array.from(document.querySelectorAll('.product-card'));
+            const prevBtn = document.getElementById('prev-btn');
+            const nextBtn = document.getElementById('next-btn');
+            
+            const numCards = cards.length;
+            let autoRotateInterval;
+            let idleTimeout;
+
+            let currentIndex = 0;
+            const savedIndex = sessionStorage.getItem('carouselIndex');
+            if (savedIndex !== null) {
+                currentIndex = parseInt(savedIndex, 10);
+            }
+
+            cards.forEach((card, index) => {
+                card.querySelectorAll('a').forEach(link => {
+                    link.addEventListener('click', () => {
+                        sessionStorage.setItem('carouselIndex', index);
+                    });
+                });
+            });
+
+            function updateCarousel() {
+                cards.forEach((card, i) => {
+                    card.classList.remove('active', 'prev', 'next', 'hidden-prev', 'hidden-next');
+                    const prevIndex = (currentIndex - 1 + numCards) % numCards;
+                    const nextIndex = (currentIndex + 1) % numCards;
+                    const hiddenPrevIndex = (currentIndex - 2 + numCards) % numCards;
+                    const hiddenNextIndex = (currentIndex + 2) % numCards;
+
+                    if (i === currentIndex) card.classList.add('active');
+                    else if (i === prevIndex) card.classList.add('prev');
+                    else if (i === nextIndex) card.classList.add('next');
+                    else if (i === hiddenPrevIndex) card.classList.add('hidden-prev');
+                    else if (i === hiddenNextIndex) card.classList.add('hidden-next');
+                });
+                sessionStorage.setItem('carouselIndex', currentIndex);
+            }
+            
+            function showNext() {
+                currentIndex = (currentIndex + 1) % numCards;
+                updateCarousel();
+            }
+
+            function showPrev() {
+                currentIndex = (currentIndex - 1 + numCards) % numCards;
+                updateCarousel();
+            }
+
+            function startAutoRotate() {
+                stopAutoRotate();
+                autoRotateInterval = setInterval(showNext, 4000);
+            }
+
+            function stopAutoRotate() {
+                clearInterval(autoRotateInterval);
+            }
+
+            function resetIdleTimer() {
+                stopAutoRotate();
+                clearTimeout(idleTimeout);
+                idleTimeout = setTimeout(startAutoRotate, 5000);
+            }
+
+            nextBtn.addEventListener('click', () => {
+                showNext();
+                resetIdleTimer();
+            });
+
+            prevBtn.addEventListener('click', () => {
+                showPrev();
+                resetIdleTimer();
+            });
+            
+            updateCarousel();
+            startAutoRotate();
+        });
+    </script>
+</body>
+</html>
+

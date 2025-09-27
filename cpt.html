@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Custom Python Tool Service - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+            --warning-color: #ffc107;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-shadow: 0 0 15px var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .header .price-tag {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .content-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            padding-top: 5px;
+        }
+        
+        .feature-text h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+        
+        .feature-text p {
+            margin: 0;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .disclaimer-box {
+            background: rgba(255, 193, 7, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Custom Python Tool Service</h1>
+            <div class="price-tag"></div>
+        </header>
+
+        <div class="content-box">
+            <h2><i class="fas fa-drafting-compass"></i> From Complex Idea to Powerful Tool</h2>
+            <p class="intro-text">
+                Standard software doesn't fit your needs? We specialize in building bespoke Python applications from the ground up. Turn your unique concept into a fully-functional, professional-grade tool designed exclusively for you.
+            </p>
+        </div>
+
+        <div class="content-box">
+            <h2><i class="fas fa-cogs"></i> How It Works: Our 3-Step Process</h2>
+            <div class="feature-item">
+                <i class="fas fa-comments"></i>
+                <div class="feature-text">
+                    <h3>1. Strategy & Consultation</h3>
+                    <p>We start with a deep-dive consultation to understand your goals. We'll define the project scope, features, and create a clear roadmap for development.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-code-branch"></i>
+                <div class="feature-text">
+                    <h3>2. Development & Prototyping</h3>
+                    <p>Our team gets to work, building your tool with clean, efficient code. We provide regular updates and prototypes to ensure the project is aligned with your vision.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-rocket"></i>
+                <div class="feature-text">
+                    <h3>3. Delivery & Support</h3>
+                    <p>You receive the final, polished tool, ready for deployment. We also provide documentation and support to ensure a smooth handover.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-box disclaimer-box">
+            <h2><i class="fas fa-exclamation-triangle"></i> Service Policy</h2>
+             <div class="feature-item">
+                
+             <div class="feature-item">
+                <i class="fas fa-handshake"></i>
+                <div class="feature-text">
+                    <h3>Project Approval</h3>
+                    <p>A consultation is required to discuss the project scope and ensure it meets our ethical guidelines before work begins.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="payments.html" class="cta-button">Book a Consultation</a>
+            <a href="index.html" class="back-link">← Back to All Products</a>
+        </div>
+    </div>
+
+</body>
+</html>
+

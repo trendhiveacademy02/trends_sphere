@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Hacking Course - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Poppins:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-color: #ffffff;
+            --secondary-color: #0a0a0a;
+            --accent-color: #007bff;
+            --card-bg: rgba(20, 20, 20, 0.75);
+            --shadow-color: rgba(0, 123, 255, 0.6);
+            --warning-color: #ff4757;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            overflow-x: hidden;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            opacity: 0;
+            transform: translateY(30px);
+            animation: fadeIn 1s ease-out forwards;
+        }
+        
+        @keyframes fadeIn {
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .header h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 3rem;
+            text-shadow: 0 0 15px var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .header .price-tag {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--accent-color);
+        }
+        
+        .content-box {
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 15px;
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+            margin-bottom: 30px;
+        }
+
+        .content-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+        }
+
+        .feature-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 20px;
+        }
+        
+        .feature-item i {
+            color: var(--accent-color);
+            font-size: 1.5rem;
+            width: 40px;
+            text-align: center;
+            margin-right: 15px;
+            flex-shrink: 0;
+            padding-top: 5px;
+        }
+        
+        .feature-text h3 {
+            margin: 0 0 5px 0;
+            font-size: 1.2rem;
+        }
+        
+        .feature-text p {
+            margin: 0;
+            color: #ccc;
+            line-height: 1.5;
+        }
+        
+        .intro-text {
+            font-size: 1.1rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+        
+        .disclaimer-box {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .actions {
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 15px 35px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            margin: 10px;
+        }
+
+        .cta-button {
+            background-color: var(--accent-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: #0056b3;
+            transform: translateY(-3px);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            color: #aaa;
+        }
+
+        .back-link:hover {
+            color: var(--primary-color);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <header class="header">
+            <h1>Basic Ethical Hacking Course</h1>
+            <div class="price-tag"></div>
+        </header>
+
+        <div class="content-box">
+            <h2><i class="fas fa-shield-alt"></i> Learn to Think Like a Hacker to Defend Like a Pro</h2>
+            <p class="intro-text">
+                This course provides the fundamental knowledge and practical skills to understand and defend against common cyber threats. By learning how attackers operate, you can become a powerful force for protecting digital assets.
+            </p>
+        </div>
+
+        <div class="content-box">
+            <h2><i class="fas fa-graduation-cap"></i> What You Will Learn</h2>
+            <div class="feature-item">
+                <i class="fas fa-mobile-alt"></i>
+                <div class="feature-text">
+                    <h3>Mobile & Device Security</h3>
+                    <p>Understand how Remote Access Tools (RATs) work to learn how to detect and prevent unauthorized access to your devices and protect personal data like photo galleries.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-terminal"></i>
+                <div class="feature-text">
+                    <h3>Command-Line Essentials with Termux</h3>
+                    <p>Get a proper setup and introduction to Termux, a powerful terminal emulator for Android, and learn how to use it for security analysis and network testing.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-sitemap"></i>
+                <div class="feature-text">
+                    <h3>Web Application Security Tools</h3>
+                    <p>Learn to use tools like SQLMap and Admin Panel Finders defensively to discover and patch vulnerabilities in web applications before malicious hackers can exploit them.</p>
+                </div>
+            </div>
+             <div class="feature-item">
+                <i class="fas fa-fish"></i>
+                <div class="feature-text">
+                    <h3>Understanding Phishing Attacks</h3>
+                    <p>Analyze how phishing tools like Maxphisher work to understand the psychology and techniques used, enabling you to build stronger defenses against them.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-box disclaimer-box">
+            <h2><i class="fas fa-exclamation-triangle"></i> Important Ethical Commitment</h2>
+            <div class="feature-item">
+                <i class="fas fa-book-reader"></i>
+                <div class="feature-text">
+                    <h3>Strictly Educational</h3>
+                    <p>This course is for educational purposes only. All techniques are taught in the context of ethical hacking and cybersecurity defense.</p>
+                </div>
+            </div>
+            <div class="feature-item">
+                <i class="fas fa-balance-scale"></i>
+                <div class="feature-text">
+                    <h3>Legal & Responsible Use</h3>
+                    <p>You are responsible for using this knowledge legally and ethically. Unauthorized access to computer systems is a crime.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="actions">
+            <a href="payments.html" class="cta-button">Enroll Now</a>
+            <a href="index.html" class="back-link">← Back to All Products</a>
+        </div>
+    </div>
+
+</body>
+</html>
