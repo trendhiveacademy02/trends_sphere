@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track1 & Track2 - Trend's Sphere</title>
+    <!-- Font Awesome CSS for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Share+Tech+Mono&display=swap');
+
+        :root {
+            --primary-color: #00ffcc; /* Changed accent to cyan */
+            --secondary-color: #0a0a0a;
+            --text-color: #ffffff;
+            --card-bg: rgba(20, 40, 50, 0.6);
+            --shadow-color: rgba(0, 255, 204, 0.4);
+            --border-color: rgba(0, 255, 204, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Share Tech Mono', monospace;
+            background-color: var(--secondary-color);
+            color: var(--text-color);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            background-image:
+                linear-gradient(rgba(0, 255, 204, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 204, 0.05) 1px, transparent 1px);
+            background-size: 30px 30px;
+        }
+
+        .terminal-window {
+            width: 100%;
+            max-width: 900px;
+            background: var(--card-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+            box-shadow: 0 0 30px var(--shadow-color);
+            padding: 30px;
+            animation: fadeIn 1s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .terminal-header {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.8rem;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--shadow-color);
+            margin-bottom: 20px;
+            white-space: nowrap;
+            overflow: hidden;
+            border-right: .15em solid var(--primary-color);
+            animation: typing 2.5s steps(20, end), blink-caret .75s step-end infinite;
+        }
+
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+        @keyframes blink-caret {
+          from, to { border-color: transparent }
+          50% { border-color: var(--primary-color); }
+        }
+
+        .terminal-content h2 {
+            color: var(--text-color);
+            font-size: 1.2rem;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+        }
+        
+        .data-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .data-point {
+            background: rgba(0,0,0,0.3);
+            border: 1px solid var(--border-color);
+            padding: 15px;
+            border-radius: 5px;
+            text-align: center;
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        
+        .data-point:hover {
+            background: var(--secondary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+            transform: translateY(-5px);
+        }
+        
+        .data-point i {
+            font-size: 1.5rem;
+            margin-bottom: 10px;
+            color: var(--primary-color);
+        }
+        
+        .data-point span {
+            font-size: 1rem;
+            display: block;
+        }
+        
+        .disclaimer {
+            font-style: italic;
+            color: #aaa;
+            font-size: 0.9rem;
+            margin-bottom: 30px;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 15px;
+        }
+
+        .actions {
+            text-align: center;
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+        }
+        
+        .cta-button, .back-link {
+            display: inline-block;
+            padding: 12px 30px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-weight: 700;
+            transition: all 0.3s ease;
+            border: 1px solid var(--primary-color);
+        }
+
+        .cta-button {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            box-shadow: 0 0 15px var(--shadow-color);
+        }
+
+        .cta-button:hover {
+            background-color: var(--secondary-color);
+            color: var(--primary-color);
+            box-shadow: 0 0 25px var(--shadow-color);
+        }
+
+        .back-link {
+            background-color: transparent;
+            color: var(--primary-color);
+        }
+
+        .back-link:hover {
+            background-color: rgba(0, 255, 204, 0.1);
+        }
+        
+    </style>
+</head>
+<body>
+
+    <div class="terminal-window">
+        <h1 class="terminal-header">> Accessing Intel...</h1>
+        <div class="terminal-content">
+            <h2>// Pre-Purchase Intelligence Briefing:</h2>
+            <div class="data-grid">
+                <div class="data-point"><i class="fas fa-fingerprint"></i><span>Bin</span></div>
+                <div class="data-point"><i class="fas fa-database"></i><span>Base</span></div>
+                <div class="data-point"><i class="fas fa-barcode"></i><span>Code</span></div>
+                <div class="data-point"><i class="fas fa-tags"></i><span>Type</span></div>
+                <div class="data-point"><i class="fas fa-university"></i><span>Bank</span></div>
+                <div class="data-point"><i class="fas fa-network-wired"></i><span>Payment System</span></div>
+                <div class="data-point"><i class="fas fa-layer-group"></i><span>Level</span></div>
+                <div class="data-point"><i class="fas fa-globe-americas"></i><span>Country</span></div>
+            </div>
+            
+            <p class="disclaimer">This data provides the foundational blueprint. Full access unlocks the actionable intelligence needed for strategic research and security analysis.</p>
+
+            <div class="actions">
+                <a href="payments.html" class="cta-button">Purchase Full Access</a>
+                <a href="index.html" class="back-link">Return to Mainframe</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
