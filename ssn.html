@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The All-Access Pass - Trend's Sphere</title>
+    <title>S.S.N + D.O.B - Trend's Sphere</title>
     <!-- Font Awesome CSS for icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" />
     <style>
@@ -155,11 +155,45 @@
             font-size: 1.3rem;
             margin: 0;
         }
+        .feature-card p {
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+
+        /* --- Pricing Tiers --- */
+        .pricing-tiers {
+            margin-bottom: 30px;
+        }
+        .pricing-tier {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0,0,0,0.2);
+            padding: 10px 15px;
+            border-radius: 5px;
+            margin-bottom: 10px;
+            border-left: 3px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+        .pricing-tier:hover {
+            border-left-color: var(--primary-color);
+            background: rgba(0,0,0,0.4);
+        }
+        .pricing-tier .tier-name {
+            font-size: 1rem;
+            color: var(--text-color);
+        }
+        .pricing-tier .tier-price {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            text-shadow: 0 0 10px var(--shadow-color);
+        }
         
         .terms-box {
             background: rgba(255, 215, 0, 0.05);
             border: 1px solid var(--border-color);
-            color: var(--warning-color);
+            color: var(--primary-color);
             padding: 30px;
             border-radius: 15px;
         }
@@ -199,7 +233,7 @@
         <header class="hero">
             <h1 class="animate-on-scroll">🔐 S.S.N + D.O.B 💥</h1>
             <p class="subtitle animate-on-scroll">
-               🔒 Secure • 🧠 Smart • ⚙️ Fast — built for next-gen verification systems.🚀 Modern tech meets ultimate privacy protection.
+                🔒 Secure • 🧠 Smart • ⚙️ Fast — built for next-gen verification systems.🚀 Modern tech meets ultimate privacy protection.
             </p>
             <a href="payments.html" class="cta-button animate-on-scroll">GET ACCESS NOW</a>
         </header>
@@ -209,16 +243,40 @@
             <div class="features-grid">
                 <div class="feature-card">
                     <i class="fas fa-dollar-sign"></i>
-                    <h3>Cheapest Price</h3>
-                    <p>Get it all at the cheapest price — fast, reliable & easy access 🚀</p>
+                    <div>
+                        <h3>Cheapest Price</h3>
+                        <p>Get it all at the cheapest price — fast, reliable & easy access 🚀</p>
+                    </div>
                 </div>
                 <div class="feature-card">
                     <i class="fas fa-lock"></i>
-                    <h3>Secure Source</h3>
-                    <p>100% secure source with real-time updates 🔥</p>
+                    <div>
+                        <h3>Secure Source</h3>
+                        <p>100% secure source with real-time updates 🔥</p>
+                    </div>
                 </div>
             </div>
         </section>
+
+        <!-- NEW SECTION ADDED HERE -->
+        <section class="content-box animate-on-scroll" id="bulk-pricing">
+            <h2><i class="fas fa-boxes"></i> BULK PRICING TIERS</h2>
+            <div class="pricing-tiers">
+                <div class="pricing-tier">
+                    <span class="tier-name">5+ Units</span>
+                    <span class="tier-price">$5 / Unit</span>
+                </div>
+                <div class="pricing-tier">
+                    <span class="tier-name">10+ Units</span>
+                    <span class="tier-price">$4 / Unit</span>
+                </div>
+                <div class="pricing-tier">
+                    <span class="tier-name">20+ Units</span>
+                    <span class="tier-price">$3 / Unit</span>
+                </div>
+            </div>
+        </section>
+        <!-- END OF NEW SECTION -->
         
         <section class="terms-box animate-on-scroll" id="terms">
             <h2><i class="fas fa-file-contract"></i> TERMS & CONDITIONS</h2><br>
