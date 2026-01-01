@@ -1,0 +1,416 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PROJECT: ANDROID_RAT // DEMO LAB</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&family=Rajdhani:wght@300;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'monospace'],
+                        rajdhani: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        crimson: {
+                            500: '#ff003c',
+                            900: '#33000f',
+                            glow: 'rgba(255, 0, 60, 0.5)'
+                        },
+                        cyber: {
+                            black: '#030001',
+                            dark: '#0a0a0a',
+                            green: '#00ff41'
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-red': "linear-gradient(to right, #1a0005 1px, transparent 1px), linear-gradient(to bottom, #1a0005 1px, transparent 1px)",
+                    },
+                    animation: {
+                        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+                        'flicker': 'flicker 0.15s infinite',
+                    },
+                    keyframes: {
+                        flicker: {
+                            '0%': { opacity: '0.9' },
+                            '50%': { opacity: '1.0' },
+                            '100%': { opacity: '0.9' },
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #030001;
+            color: #e5e5e5;
+            overflow-x: hidden;
+            cursor: crosshair;
+        }
+
+        /* CRT Scanline Effect */
+        .scanlines {
+            background: linear-gradient(
+                to bottom,
+                rgba(255,255,255,0),
+                rgba(255,255,255,0) 50%,
+                rgba(0,0,0,0.2) 50%,
+                rgba(0,0,0,0.2)
+            );
+            background-size: 100% 4px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 50;
+            pointer-events: none;
+            opacity: 0.6;
+        }
+
+        .noise-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 40;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+        }
+
+        /* Scroll Animation Classes */
+        .reveal-on-scroll {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+        }
+        .reveal-on-scroll.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Glitch Text Effect */
+        .glitch-text {
+            position: relative;
+        }
+        
+        /* Card Hover Effects */
+        .cyber-card {
+            background: rgba(10, 0, 2, 0.6);
+            backdrop-filter: blur(5px);
+            border: 1px solid #33000f;
+            transition: all 0.3s ease;
+        }
+        .cyber-card:hover {
+            border-color: #ff003c;
+            box-shadow: 0 0 20px rgba(255, 0, 60, 0.15);
+            transform: translateY(-2px);
+        }
+
+        /* Selection Color */
+        ::selection {
+            background: #ff003c;
+            color: white;
+        }
+    </style>
+</head>
+<body class="font-rajdhani selection:bg-crimson-500 selection:text-white">
+
+    <!-- Overlays -->
+    <div class="scanlines"></div>
+    <div class="noise-overlay"></div>
+    <div class="fixed top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-crimson-500 to-transparent z-50 opacity-50"></div>
+
+    <!-- Background Grid -->
+    <div class="fixed inset-0 bg-[size:50px_50px] bg-grid-red opacity-20 pointer-events-none -z-10"></div>
+
+    <div class="container mx-auto px-6 py-12 max-w-6xl relative z-10">
+        
+        <!-- Header / Nav -->
+        <header class="flex justify-between items-center mb-20 border-b border-crimson-900/50 pb-4 reveal-on-scroll">
+            <div class="flex items-center gap-3">
+                <i class="fas fa-biohazard text-crimson-500 text-2xl animate-pulse-slow"></i>
+                <div class="font-mono text-xs tracking-[0.3em] text-gray-500">
+                    CLASSIFIED // <span class="text-crimson-500">LEVEL_4_ACCESS</span>
+                </div>
+            </div>
+            <a href="index.html" class="font-mono text-xs text-crimson-500 border border-crimson-900 px-4 py-2 hover:bg-crimson-500 hover:text-black transition-colors">
+                [ ESC ] RETURN_TO_BASE
+            </a>
+        </header>
+
+        <!-- Hero Section -->
+        <section class="mb-32 relative">
+            <div class="absolute -top-20 -right-20 w-64 h-64 bg-crimson-500/5 rounded-full blur-3xl pointer-events-none"></div>
+            
+            <div class="inline-block border border-crimson-500 text-crimson-500 px-3 py-1 text-[10px] font-mono font-bold tracking-widest mb-4 reveal-on-scroll">
+                STATUS: EDUCATIONAL_DEMO
+            </div>
+            
+            <h1 class="text-6xl md:text-8xl font-bold mb-6 leading-none reveal-on-scroll">
+                ANDROID_RAT <br>
+                <span class="text-transparent bg-clip-text bg-gradient-to-r from-crimson-500 to-gray-800" id="scramble-title">DEMO LAB</span>
+            </h1>
+            
+            <p class="text-gray-400 font-mono max-w-2xl text-lg leading-relaxed border-l-2 border-crimson-500/50 pl-6 reveal-on-scroll">
+                A conceptual simulation of Remote Access Trojan architecture. 
+                Designed for security researchers, penetration testers, and malware analysts to understand persistence mechanisms and surveillance vectors in a controlled environment.
+            </p>
+        </section>
+
+        <!-- What Is This -->
+        <section class="mb-32 grid md:grid-cols-2 gap-16 items-center">
+            <div class="reveal-on-scroll">
+                <h2 class="text-3xl font-bold mb-6 text-white flex items-center gap-3">
+                    <span class="text-crimson-500">01.</span> THE ARCHITECTURE
+                </h2>
+                <div class="space-y-6 text-gray-400 font-mono text-sm leading-7">
+                    <p>
+                        A Remote Access Trojan (RAT) is a malware program that includes a back door for administrative control over the target computer. In the context of mobile security, Android RATs represent a significant threat vector due to the personal nature of the devices.
+                    </p>
+                    <p>
+                        <strong class="text-white">Defense requires understanding.</strong> By studying the command and control (C2) flows, data exfiltration methods, and permission abuse logic, security professionals can build robust detection rules (YARA, Snort) and hardening policies.
+                    </p>
+                </div>
+            </div>
+            <div class="relative reveal-on-scroll delay-200">
+                <!-- Abstract UI Representation -->
+                <div class="border border-crimson-900 bg-black/80 p-6 rounded relative overflow-hidden">
+                    <div class="absolute top-0 left-0 w-full h-1 bg-crimson-500 animate-pulse"></div>
+                    <div class="font-mono text-xs text-green-500 mb-2">> ESTABLISHING_CONNECTION...</div>
+                    <div class="font-mono text-xs text-green-500 mb-2">> HANDSHAKE_COMPLETE [192.168.X.X]</div>
+                    <div class="font-mono text-xs text-crimson-500 mb-2">> UPLOADING_PAYLOAD...</div>
+                    <div class="font-mono text-xs text-gray-500 mb-4">> WAITING_FOR_EXECUTION...</div>
+                    
+                    <div class="grid grid-cols-3 gap-2 mt-4 opacity-50">
+                        <div class="h-16 border border-gray-800 bg-gray-900/50"></div>
+                        <div class="h-16 border border-gray-800 bg-gray-900/50"></div>
+                        <div class="h-16 border border-gray-800 bg-gray-900/50"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Capabilities -->
+        <section class="mb-32">
+            <div class="flex justify-between items-end mb-12 reveal-on-scroll">
+                <h2 class="text-3xl font-bold text-white">
+                    <span class="text-crimson-500">02.</span> CAPABILITY MATRIX
+                </h2>
+                <span class="font-mono text-xs text-gray-600 hidden md:block">RESEARCH_ONLY // NON_OPERATIONAL</span>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Card 1 -->
+                <div class="cyber-card p-8 group reveal-on-scroll">
+                    <i class="fas fa-eye text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">Surveillance Logic</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        Conceptual overview of how attackers tap into microphone, camera, and screen inputs without triggering UI indicators or privacy dots.
+                    </p>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="cyber-card p-8 group reveal-on-scroll delay-100">
+                    <i class="fas fa-map-marker-alt text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">Geo-Tracking</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        Analysis of GPS polling intervals and battery optimization bypass methods used to maintain persistent location history.
+                    </p>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="cyber-card p-8 group reveal-on-scroll delay-200">
+                    <i class="fas fa-file-code text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">File Exfiltration</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        Study of directory traversal and silent upload protocols. Understanding how large data is chunked to avoid network spikes.
+                    </p>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="cyber-card p-8 group reveal-on-scroll">
+                    <i class="fas fa-terminal text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">Shell Access</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        Simulation of reverse shell environments and command execution privileges on rooted vs non-rooted devices.
+                    </p>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="cyber-card p-8 group reveal-on-scroll delay-100">
+                    <i class="fas fa-ghost text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">Persistence</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        Mechanisms for surviving reboots, including receiver registration, service hooks, and icon hiding techniques.
+                    </p>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="cyber-card p-8 group reveal-on-scroll delay-200">
+                    <i class="fas fa-key text-3xl text-crimson-500 mb-6 group-hover:scale-110 transition-transform"></i>
+                    <h3 class="text-xl font-bold mb-3 text-white">Keylogging</h3>
+                    <p class="text-gray-500 font-mono text-xs leading-relaxed">
+                        How accessibility services are abused to capture keystrokes and swipe patterns across secure applications.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Disclaimer Block -->
+        <section class="mb-32 reveal-on-scroll">
+            <div class="border border-crimson-500/30 bg-crimson-900/10 p-8 relative overflow-hidden">
+                <!-- Watermark -->
+                <div class="absolute -right-10 -bottom-10 text-9xl text-crimson-900 opacity-20 transform -rotate-12 pointer-events-none">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+
+                <div class="flex items-start gap-6 relative z-10">
+                    <div class="text-crimson-500 text-3xl mt-1">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white mb-2 uppercase tracking-wide">Demo Environment Limitation</h3>
+                        <p class="text-gray-400 font-mono text-sm leading-relaxed mb-4">
+                            This page and the associated "Android RAT" product listed in Trend's Sphere are strictly for <strong class="text-white">educational demonstration</strong> and <strong class="text-white">security research</strong> purposes.
+                        </p>
+                        <ul class="text-xs font-mono text-gray-500 space-y-2 list-disc pl-4">
+                            <li>No executable malware or APKs are provided or sold.</li>
+                            <li>The "Demo" allows users to view a simulated dashboard interface only.</li>
+                            <li>We do not condone, support, or assist in illegal surveillance or unauthorized access.</li>
+                            <li>This content is designed to help defenders recognize signs of compromise.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Target Audience -->
+        <section class="mb-24 reveal-on-scroll">
+            <h2 class="text-center font-mono text-xs text-gray-600 mb-8 tracking-[0.2em] uppercase">-- Authorized Personnel Only --</h2>
+            
+            <div class="flex flex-wrap justify-center gap-4">
+                <span class="px-6 py-2 border border-gray-800 bg-gray-900 text-gray-400 font-mono text-sm">Penetration Testers</span>
+                <span class="px-6 py-2 border border-gray-800 bg-gray-900 text-gray-400 font-mono text-sm">Security Analysts</span>
+                <span class="px-6 py-2 border border-gray-800 bg-gray-900 text-gray-400 font-mono text-sm">Threat Hunters</span>
+                <span class="px-6 py-2 border border-gray-800 bg-gray-900 text-gray-400 font-mono text-sm">Ethical Hackers</span>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="text-center border-t border-gray-900 pt-8 pb-8 reveal-on-scroll">
+            <p class="font-mono text-xs text-gray-700">
+                TREND'S SPHERE // SECURE RESEARCH DIVISION <br>
+                <span class="text-crimson-900">NO_LOGS_POLICY_ACTIVE</span>
+            </p>
+        </footer>
+
+    </div>
+
+    <script>
+        // --- SCRAMBLE TEXT EFFECT ---
+        class TextScramble {
+            constructor(el) {
+                this.el = el;
+                this.chars = '!<>-_\\/[]{}—=+*^?#________';
+                this.update = this.update.bind(this);
+            }
+            setText(newText) {
+                const oldText = this.el.innerText;
+                const length = Math.max(oldText.length, newText.length);
+                const promise = new Promise((resolve) => this.resolve = resolve);
+                this.queue = [];
+                for (let i = 0; i < length; i++) {
+                    const from = oldText[i] || '';
+                    const to = newText[i] || '';
+                    const start = Math.floor(Math.random() * 40);
+                    const end = start + Math.floor(Math.random() * 40);
+                    this.queue.push({ from, to, start, end });
+                }
+                cancelAnimationFrame(this.frameRequest);
+                this.frame = 0;
+                this.update();
+                return promise;
+            }
+            update() {
+                let output = '';
+                let complete = 0;
+                for (let i = 0, n = this.queue.length; i < n; i++) {
+                    let { from, to, start, end, char } = this.queue[i];
+                    if (this.frame >= end) {
+                        complete++;
+                        output += to;
+                    } else if (this.frame >= start) {
+                        if (!char || Math.random() < 0.28) {
+                            char = this.randomChar();
+                            this.queue[i].char = char;
+                        }
+                        output += `<span class="text-crimson-500 opacity-50">${char}</span>`;
+                    } else {
+                        output += from;
+                    }
+                }
+                this.el.innerHTML = output;
+                if (complete === this.queue.length) {
+                    this.resolve();
+                } else {
+                    this.frameRequest = requestAnimationFrame(this.update);
+                    this.frame++;
+                }
+            }
+            randomChar() {
+                return this.chars[Math.floor(Math.random() * this.chars.length)];
+            }
+        }
+
+        // --- INIT ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // 1. Scramble Title
+            const el = document.getElementById('scramble-title');
+            if(el) {
+                const fx = new TextScramble(el);
+                setTimeout(() => {
+                    fx.setText('DEMO LAB');
+                }, 1000);
+            }
+
+            // 2. Scroll Reveal Observer
+            const observerOptions = {
+                root: null,
+                rootMargin: '0px',
+                threshold: 0.1
+            };
+
+            const observer = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                        // observer.unobserve(entry.target); // Keep observing for replay if needed, or unobserve for one-time
+                    }
+                });
+            }, observerOptions);
+
+            document.querySelectorAll('.reveal-on-scroll').forEach((el) => {
+                observer.observe(el);
+            });
+        });
+    </script>
+</body>
+</html>
