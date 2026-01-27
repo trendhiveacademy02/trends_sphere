@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digital Wallet Security & BIN Analysis [2025] | Financial Risk Intel</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        fin: {
+                            bg: '#0a0a0a',      // Graphite Black
+                            card: '#111111',    // Slightly lighter card
+                            border: '#27272a',  // Dark Gray Border
+                            green: '#10b981',   // Muted Matrix Green
+                            cyan: '#06b6d4',    // Soft Cyan
+                            text: '#d1d5db',    // Light Gray Text
+                            muted: '#9ca3af',   // Muted Text
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-subtle': "linear-gradient(to right, #1f2937 1px, transparent 1px), linear-gradient(to bottom, #1f2937 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #d1d5db;
+        }
+
+        .bg-grid {
+            background-size: 40px 40px;
+            opacity: 0.1;
+        }
+
+        .section-fade {
+            animation: fadeUp 0.8s ease-out forwards;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .delay-100 { animation-delay: 0.1s; }
+        .delay-200 { animation-delay: 0.2s; }
+        .delay-300 { animation-delay: 0.3s; }
+
+        @keyframes fadeUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 9999px;
+            font-size: 0.75rem;
+            font-weight: 500;
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .status-active {
+            background: rgba(16, 185, 129, 0.1);
+            color: #10b981;
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .card-hover:hover {
+            border-color: #06b6d4;
+            transform: translateY(-2px);
+            transition: all 0.3s ease;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased selection:bg-fin-cyan selection:text-black min-h-screen flex flex-col">
+
+    <!-- Background Grid -->
+    <div class="fixed inset-0 bg-grid-subtle bg-grid pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="border-b border-fin-border bg-fin-bg/95 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-6xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-fin-muted hover:text-white transition-colors text-sm font-mono flex items-center gap-2">
+                    <i class="fas fa-chevron-left text-xs"></i> DATABASE
+                </a>
+                <div class="h-4 w-px bg-fin-border"></div>
+                <span class="text-fin-cyan font-mono text-xs tracking-wider uppercase opacity-80">
+                    FIN_SEC_RESEARCH // 2025
+                </span>
+            </div>
+            <div class="hidden md:flex items-center gap-3">
+                <div class="status-badge status-active">
+                    <span class="relative flex h-2 w-2">
+                      <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                      <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                    </span>
+                    SYSTEM ONLINE
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 flex-grow py-16 px-6">
+        <div class="max-w-5xl mx-auto">
+            
+            <!-- Hero Section -->
+            <header class="mb-16 section-fade">
+                <p class="text-fin-cyan font-mono text-sm mb-4 tracking-wide uppercase">Product Analysis Module</p>
+                <h1 class="text-4xl md:text-5xl font-display font-bold text-white mb-6 leading-tight">
+                    Digital Wallet Security <br>
+                    <span class="text-fin-muted">& BIN Risk Analysis Framework</span>
+                </h1>
+                <p class="text-lg text-fin-muted max-w-2xl font-light leading-relaxed">
+                    A comprehensive study of NFC payment tokenization vulnerabilities, BIN (Bank Identification Number) exposure vectors, and modern enrollment verification defenses.
+                </p>
+            </header>
+
+            <div class="grid lg:grid-cols-3 gap-12">
+                
+                <!-- Main Column -->
+                <div class="lg:col-span-2 space-y-12">
+                    
+                    <!-- Overview -->
+                    <section class="section-fade delay-100">
+                        <h2 class="text-2xl font-display font-semibold text-white mb-6 border-b border-fin-border pb-3">
+                            Research Overview
+                        </h2>
+                        <div class="prose prose-invert max-w-none text-fin-muted font-light">
+                            <p class="mb-4">
+                                The rapid adoption of digital wallets (Apple Pay, Google Pay, Samsung Pay) has shifted the fraud landscape from traditional card-not-present (CNP) attacks to sophisticated "enrollment abuse" vectors.
+                            </p>
+                            <p>
+                                This research module dissects the provisioning protocols used by major issuers, highlighting weaknesses in Yellow Path / Green Path verification logic. We analyze how threat actors exploit BIN ranges with weak 3DS configurations to bypass OTP challenges.
+                            </p>
+                        </div>
+                    </section>
+
+                    <!-- Risk Vectors -->
+                    <section class="section-fade delay-200">
+                        <h2 class="text-2xl font-display font-semibold text-white mb-6 border-b border-fin-border pb-3">
+                            Critical Risk Vectors
+                        </h2>
+                        <div class="grid sm:grid-cols-2 gap-4">
+                            <div class="bg-fin-card border border-fin-border p-5 rounded hover:border-fin-green/50 transition-colors">
+                                <i class="fas fa-mobile-alt text-fin-green mb-3 text-xl"></i>
+                                <h3 class="font-display font-semibold text-white mb-2">Device Spoofing</h3>
+                                <p class="text-sm text-fin-muted">Analysis of device fingerprint emulation tools used to mimic trusted devices during wallet provisioning.</p>
+                            </div>
+                            <div class="bg-fin-card border border-fin-border p-5 rounded hover:border-fin-cyan/50 transition-colors">
+                                <i class="fas fa-credit-card text-fin-cyan mb-3 text-xl"></i>
+                                <h3 class="font-display font-semibold text-white mb-2">BIN Attacks</h3>
+                                <p class="text-sm text-fin-muted">Understanding brute-force attacks on specific BIN ranges with static CVC/Expiry configurations.</p>
+                            </div>
+                            <div class="bg-fin-card border border-fin-border p-5 rounded hover:border-fin-green/50 transition-colors">
+                                <i class="fas fa-shield-alt text-fin-green mb-3 text-xl"></i>
+                                <h3 class="font-display font-semibold text-white mb-2">IVR Bypass</h3>
+                                <p class="text-sm text-fin-muted">Case studies on social engineering tactics targeting Interactive Voice Response verification systems.</p>
+                            </div>
+                            <div class="bg-fin-card border border-fin-border p-5 rounded hover:border-fin-cyan/50 transition-colors">
+                                <i class="fas fa-network-wired text-fin-cyan mb-3 text-xl"></i>
+                                <h3 class="font-display font-semibold text-white mb-2">Tokenization Flaws</h3>
+                                <p class="text-sm text-fin-muted">Technical breakdown of how TSP (Token Service Provider) trust scores are calculated and manipulated.</p>
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Methodology -->
+                    <section class="section-fade delay-300">
+                        <h2 class="text-2xl font-display font-semibold text-white mb-6 border-b border-fin-border pb-3">
+                            Analysis Methodology
+                        </h2>
+                        <div class="bg-fin-card border border-fin-border rounded-lg p-6">
+                            <ul class="space-y-4">
+                                <li class="flex gap-4">
+                                    <span class="font-mono text-fin-cyan text-sm">01.</span>
+                                    <div>
+                                        <h4 class="text-white font-medium text-sm">Issuer Policy Review</h4>
+                                        <p class="text-sm text-fin-muted mt-1">Comparative analysis of provisioning friction across top 20 US/EU banks.</p>
+                                    </div>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="font-mono text-fin-cyan text-sm">02.</span>
+                                    <div>
+                                        <h4 class="text-white font-medium text-sm">Dark Web Intelligence</h4>
+                                        <p class="text-sm text-fin-muted mt-1">Monitoring carding forums for emerging "bins" marketed as non-vbv / auto-enroll.</p>
+                                    </div>
+                                </li>
+                                <li class="flex gap-4">
+                                    <span class="font-mono text-fin-cyan text-sm">03.</span>
+                                    <div>
+                                        <h4 class="text-white font-medium text-sm">Gateway Response Testing</h4>
+                                        <p class="text-sm text-fin-muted mt-1">Documenting decline codes and velocity limits for digital goods transactions.</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </section>
+                </div>
+
+                <!-- Sidebar -->
+                <div class="space-y-8 section-fade delay-200">
+                    
+                    <!-- Purchase Card -->
+                    <div class="bg-fin-card border border-fin-border rounded-lg p-6 shadow-xl card-hover relative overflow-hidden">
+                        <div class="absolute top-0 right-0 w-20 h-20 bg-fin-cyan/5 rounded-bl-full pointer-events-none"></div>
+                        
+                        <div class="mb-6">
+                            <span class="text-xs font-mono text-fin-green uppercase tracking-wider">Research Access</span>
+                            <div class="text-3xl font-display font-bold text-white mt-1">$50.00</div>
+                            <p class="text-xs text-fin-muted mt-2">One-time license fee</p>
+                        </div>
+
+                        <div class="space-y-3 mb-6">
+                            <div class="flex items-center gap-2 text-sm text-gray-300">
+                                <i class="fas fa-file-pdf text-fin-cyan text-xs"></i> <span>Full TXT Report </span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-300">
+                                <i class="fas fa-database text-fin-cyan text-xs"></i> <span></span>
+                            </div>
+                            <div class="flex items-center gap-2 text-sm text-gray-300">
+                                <i class="fas fa-video text-fin-cyan text-xs"></i> <span></span>
+                            </div>
+                        </div>
+
+                        <a href="payments.html" class="block w-full bg-fin-cyan hover:bg-cyan-500 text-black font-semibold font-mono text-center py-3 rounded transition-colors mb-3">
+                            ACCESS MODULE
+                        </a>
+                        <p class="text-[10px] text-center text-fin-muted">Instant delivery via secure link.</p>
+                    </div>
+
+                    <!-- Audience -->
+                    <div class="border-l-2 border-fin-border pl-6 py-2">
+                        <h4 class="text-white font-display font-medium text-sm mb-3">Intended Audience</h4>
+                        <ul class="space-y-2 text-sm text-fin-muted">
+                            <li>• Risk Managers</li>
+                            <li>• Payment Gateway Engineers</li>
+                            <li>• Fraud Strategy Analysts</li>
+                            <li>• Cybersecurity Researchers</li>
+                        </ul>
+                    </div>
+
+                    <!-- Disclaimer -->
+                    <div class="bg-fin-card border border-fin-border p-4 rounded text-xs text-fin-muted leading-relaxed">
+                        <strong class="text-white block mb-2 font-display">⚠️ Ethical Disclaimer</strong>
+                        This content is for educational and defensive purposes only. It is designed to help financial institutions identify gaps in their enrollment logic. Misuse of this information for financial fraud is illegal.
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-fin-border bg-fin-card py-8 mt-auto">
+        <div class="max-w-6xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center text-xs font-mono text-fin-muted">
+            <p>&copy; 2025 FINANCIAL RISK INTELLIGENCE UNIT.</p>
+            <div class="flex gap-4 mt-2 md:mt-0">
+                <span>SECURE_MODE: ACTIVE</span>
+                <span>ID: WAL-BIN-25</span>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
