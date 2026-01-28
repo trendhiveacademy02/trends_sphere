@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GTE FCU Enrollment Risk Case Study [2025] | Institutional Research</title>
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                        display: ['Rajdhani', 'sans-serif'],
+                    },
+                    colors: {
+                        inst: {
+                            bg: '#0a0a0a',      // Deep Black
+                            card: '#111111',    // Slightly lighter
+                            border: '#1f2937',  // Dark Gray Border
+                            accent: '#6366f1',  // Indigo
+                            slate: '#64748b',   // Slate Gray
+                            text: '#e2e8f0',    // Light Gray
+                            muted: '#94a3b8',   // Muted Text
+                        }
+                    },
+                    backgroundImage: {
+                        'grid-slate': "linear-gradient(to right, #1e293b 1px, transparent 1px), linear-gradient(to bottom, #1e293b 1px, transparent 1px)",
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #0a0a0a;
+            color: #e2e8f0;
+        }
+
+        .bg-grid {
+            background-size: 60px 60px;
+            opacity: 0.05;
+        }
+
+        /* Calm Fade In */
+        .fade-in {
+            animation: fadeIn 1s ease-out forwards;
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        .delay-100 { animation-delay: 0.2s; }
+        .delay-200 { animation-delay: 0.4s; }
+        .delay-300 { animation-delay: 0.6s; }
+
+        @keyframes fadeIn {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Minimal Separator */
+        .separator {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #1f2937, transparent);
+            margin: 2rem 0;
+        }
+
+        .report-header {
+            border-left: 2px solid #6366f1;
+            padding-left: 1rem;
+        }
+    </style>
+</head>
+<body class="font-sans antialiased min-h-screen flex flex-col selection:bg-inst-accent selection:text-white">
+
+    <!-- Subtle Grid Background -->
+    <div class="fixed inset-0 bg-grid-slate bg-grid pointer-events-none z-0"></div>
+
+    <!-- Navigation -->
+    <nav class="border-b border-inst-border bg-inst-bg/95 backdrop-blur sticky top-0 z-50">
+        <div class="max-w-5xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-4">
+                <a href="index.html" class="text-inst-muted hover:text-white transition-colors text-sm font-mono flex items-center gap-2">
+                    <i class="fas fa-arrow-left text-xs"></i> BACK TO INDEX
+                </a>
+                <div class="h-4 w-px bg-inst-border"></div>
+                <span class="text-inst-slate font-mono text-xs tracking-wider uppercase">
+                    CASE STUDY: CS-2025-GTE
+                </span>
+            </div>
+            <div class="hidden md:block">
+                <span class="text-[10px] font-mono text-inst-accent bg-inst-accent/10 border border-inst-accent/20 px-2 py-1 rounded">
+                    RESTRICTED CIRCULATION
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="relative z-10 flex-grow py-16 px-6">
+        <div class="max-w-4xl mx-auto">
+            
+            <!-- Hero Section -->
+            <header class="mb-16 fade-in">
+                <div class="report-header mb-6">
+                    <p class="text-inst-accent font-mono text-xs uppercase tracking-widest mb-2">Institutional Research Report</p>
+                    <h1 class="text-3xl md:text-5xl font-display font-bold text-white mb-4 leading-tight">
+                        Credit Union Enrollment Risk <br>
+                        <span class="text-inst-muted">Case Study: GTE Financial [2025]</span>
+                    </h1>
+                </div>
+                
+                <div class="flex gap-8 text-sm text-inst-muted font-mono border-y border-inst-border py-4">
+                    <div>
+                        <span class="block text-[10px] text-inst-slate uppercase">Date</span>
+                        <span>OCT 2025</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] text-inst-slate uppercase">Sector</span>
+                        <span>FINANCIAL SERVICES</span>
+                    </div>
+                    <div>
+                        <span class="block text-[10px] text-inst-slate uppercase">Focus</span>
+                        <span>IDENTITY VERIFICATION</span>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Overview -->
+            <section class="mb-12 fade-in delay-100">
+                <h2 class="text-xl font-display font-semibold text-white mb-4">Executive Context</h2>
+                <div class="prose prose-invert max-w-none text-inst-text font-light leading-relaxed">
+                    <p>
+                        Credit Unions (CUs) often utilize shared branching networks and legacy core banking systems (Symitar, Fiserv) that prioritize member accessibility over rigid enrollment friction.
+                    </p>
+                    <p>
+                        This case study examines specific vulnerabilities identified in GTE Financial's 2024-2025 online membership application flow. We analyze how synthetic identity fraudsters exploited specific gaps in the <strong>"Qualifile"</strong> and <strong>"ChexSystems"</strong> queries to approve automated account openings.
+                    </p>
+                </div>
+            </section>
+
+            <div class="separator"></div>
+
+            <!-- Analysis Grid -->
+            <div class="grid md:grid-cols-2 gap-12 fade-in delay-200">
+                
+                <!-- Vulnerabilities -->
+                <div>
+                    <h3 class="text-lg font-display font-semibold text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-exclamation-circle text-inst-slate"></i> Identified Vulnerabilities
+                    </h3>
+                    <ul class="space-y-6">
+                        <li class="relative pl-6 border-l border-inst-border">
+                            <h4 class="font-medium text-white text-sm mb-1">SSN Randomization Tolerance</h4>
+                            <p class="text-sm text-inst-muted">
+                                The automated decision engine allowed for a high variance in SSN issuance dates vs. DOB, failing to flag synthetic profiles.
+                            </p>
+                        </li>
+                        <li class="relative pl-6 border-l border-inst-border">
+                            <h4 class="font-medium text-white text-sm mb-1">Funding Source Loophole</h4>
+                            <p class="text-sm text-inst-muted">
+                                Initial funding via debit card (up to $500) lacked 3D Secure enforcement, allowing fraudsters to use stolen cards for account activation.
+                            </p>
+                        </li>
+                        <li class="relative pl-6 border-l border-inst-border">
+                            <h4 class="font-medium text-white text-sm mb-1">Knowledge-Based Auth (KBA) Bypass</h4>
+                            <p class="text-sm text-inst-muted">
+                                Out-of-wallet questions were sourced from public data aggregators easily accessible via OSINT tools.
+                            </p>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Defense & Mitigation -->
+                <div>
+                    <h3 class="text-lg font-display font-semibold text-white mb-6 flex items-center gap-2">
+                        <i class="fas fa-shield-alt text-inst-accent"></i> Institutional Defenses
+                    </h3>
+                    <div class="bg-inst-card border border-inst-border rounded p-5 space-y-4">
+                        <div class="flex gap-3">
+                            <div class="mt-1"><i class="fas fa-check text-inst-accent text-xs"></i></div>
+                            <div>
+                                <h4 class="text-sm font-medium text-white">Device Fingerprinting</h4>
+                                <p class="text-xs text-inst-muted mt-1">Implementation of behavioral biometrics to detect scripted form filling.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1"><i class="fas fa-check text-inst-accent text-xs"></i></div>
+                            <div>
+                                <h4 class="text-sm font-medium text-white">Document Verification (DocV)</h4>
+                                <p class="text-xs text-inst-muted mt-1">Mandatory live selfie + ID scan for flagged risk tiers.</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-3">
+                            <div class="mt-1"><i class="fas fa-check text-inst-accent text-xs"></i></div>
+                            <div>
+                                <h4 class="text-sm font-medium text-white">Velocity Rules</h4>
+                                <p class="text-xs text-inst-muted mt-1">Cap on applications per IP subnet and geo-location radius.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="separator"></div>
+
+            <!-- Methodology -->
+            <section class="mb-12 fade-in delay-300">
+                <h2 class="text-xl font-display font-semibold text-white mb-4">Research Methodology</h2>
+                <div class="bg-inst-card border border-inst-border p-6 rounded-lg">
+                    <p class="text-sm text-inst-muted leading-relaxed font-light">
+                        Our research team reconstructed the enrollment workflow using controlled test identities ("synthetic canaries") to map the decision tree logic. We monitored API responses for <span class="font-mono text-inst-accent">Experian Precision ID</span> and <span class="font-mono text-inst-accent">Early Warning Services</span> signals. This report details the specific payloads that triggered manual review versus automated approval.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <div class="flex flex-col md:flex-row items-center justify-between gap-6 bg-inst-accent/5 border border-inst-accent/20 p-8 rounded-lg fade-in delay-300">
+                <div>
+                    <h3 class="text-lg font-display font-bold text-white">Access Full Case Study</h3>
+                    <p class="text-sm text-inst-muted mt-1">Includes flowchart diagrams and API log analysis.</p>
+                </div>
+                <div class="flex flex-col items-end gap-2">
+                    <span class="text-2xl font-display font-bold text-white">$35.00</span>
+                    <a href="payments.html" class="inline-flex items-center gap-2 bg-inst-accent hover:bg-indigo-600 text-white font-medium text-sm px-6 py-2.5 rounded transition-colors">
+                        View Research Module
+                    </a>
+                </div>
+            </div>
+
+            <!-- Disclaimer -->
+            <div class="mt-12 text-center fade-in delay-300">
+                <p class="text-[10px] text-inst-slate uppercase tracking-wide mb-2">Ethical Disclosure</p>
+                <p class="text-xs text-inst-muted max-w-2xl mx-auto leading-relaxed">
+                    This research is published for defensive security awareness and fraud prevention training. All vulnerabilities discussed have been responsibly disclosed or mitigated. We do not provide PII or methods for illegal account opening.
+                </p>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="border-t border-inst-border py-8 mt-auto bg-black">
+        <div class="max-w-5xl mx-auto px-6 flex justify-between items-center text-xs font-mono text-inst-slate">
+            <p>&copy; 2025 INSTITUTIONAL RESEARCH GROUP.</p>
+            <p>REF: GTE-FCU-25</p>
+        </div>
+    </footer>
+
+</body>
+</html>
