@@ -5,975 +5,724 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trend's Sphere | Digital Intelligence</title>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Syne:wght@400;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
-    
-    <!-- Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Anton&family=Syne:wght@400;500;600;700;800&family=Syne+Mono&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-    <!-- React & Babel -->
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="https://unpkg.com/framer-motion@10.16.4/dist/framer-motion.js"></script>
-
-    <!-- Firebase -->
     <script type="module">
         import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
         import { getFirestore, doc, onSnapshot, updateDoc, increment, setDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-        const firebaseConfig = {
+        const app = initializeApp({
           apiKey: "AIzaSyCTHasE4U5ioHJjyiHWwSjxUKYl-VngFbg",
           authDomain: "trust-vote-3bbd6.firebaseapp.com",
-          databaseURL: "https://trust-vote-3bbd6-default-rtdb.firebaseio.com",
           projectId: "trust-vote-3bbd6",
           storageBucket: "trust-vote-3bbd6.firebasestorage.app",
           messagingSenderId: "626684828013",
-          appId: "1:626684828013:web:a3cb02b4f9227752b6a264",
-          measurementId: "G-DWC6YHNDXY"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        window.firebaseDB = db;
+          appId: "1:626684828013:web:a3cb02b4f9227752b6a264"
+        });
+        window.firebaseDB = getFirestore(app);
         window.firebaseTools = { doc, onSnapshot, updateDoc, increment, setDoc };
     </script>
 
     <style>
         :root {
-            --sage: #A8B99A;
-            --sage-dark: #7A8F6E;
-            --sage-light: #C8D8BB;
-            --sage-pale: #E8F0E1;
-            --black: #111110;
-            --off-white: #F2F0EB;
-            --lime: #C8E146;
-            --warm-gray: #8C8C85;
-            --card-bg: #F7F5F0;
-            --border: #D4CCBC;
+            --sage:      #B8BEA4;
+            --sage-bg:   #C0C8AA;
+            --sage-lt:   #D4DACC;
+            --sage-dk:   #7C8570;
+            --black:     #111111;
+            --off-black: #1C1C1A;
+            --red:       #E8302A;
+            --red-dk:    #C52420;
+            --white:     #F5F3EE;
+            --gray:      #787870;
+            --border:    #D0CCC0;
+        }
+        *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+        html{scroll-behavior:smooth;}
+        body{background:var(--white);color:var(--black);font-family:'Syne',sans-serif;overflow-x:hidden;}
+        .anton{font-family:'Anton',sans-serif;letter-spacing:0.01em;}
+        .mono{font-family:'Syne Mono',monospace;}
+        ::selection{background:var(--red);color:#fff;}
+        ::-webkit-scrollbar{width:4px;}
+        ::-webkit-scrollbar-track{background:var(--white);}
+        ::-webkit-scrollbar-thumb{background:var(--sage-dk);border-radius:4px;}
+
+        /* ── LOADER ── */
+        #loader{
+            position:fixed;inset:0;z-index:999;
+            background:var(--sage-bg);
+            display:flex;flex-direction:column;align-items:center;justify-content:center;gap:32px;
+        }
+        .loader-title{
+            font-family:'Anton',sans-serif;
+            font-size:clamp(56px,9vw,108px);
+            color:var(--black);
+            line-height:0.88;
+            letter-spacing:0.02em;
+            text-align:center;
+        }
+        .loader-sub{
+            font-family:'Syne Mono',monospace;
+            font-size:11px;color:rgba(0,0,0,0.42);
+            letter-spacing:0.22em;text-transform:uppercase;
+            margin-top:10px;
+        }
+        #loader-track{width:260px;height:3px;background:rgba(0,0,0,0.12);border-radius:10px;overflow:hidden;}
+        #loader-fill{height:100%;width:0%;background:var(--black);border-radius:10px;transition:width 0.35s ease;}
+        #loader-txt{font-family:'Syne Mono',monospace;font-size:11px;color:rgba(0,0,0,0.38);letter-spacing:0.12em;}
+
+        /* ── NAV ── */
+        #nav{
+            position:fixed;top:0;left:0;right:0;z-index:200;
+            height:68px;display:flex;align-items:center;
+            justify-content:space-between;padding:0 44px;
+            transition:background .3s,backdrop-filter .3s,border-color .3s;
+            border-bottom:1px solid transparent;
+        }
+        #nav.scrolled{background:rgba(192,200,170,.92);backdrop-filter:blur(16px);border-color:rgba(0,0,0,.08);}
+        .nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+        .nav-logo-box{
+            width:36px;height:36px;background:var(--black);border-radius:9px;
+            display:flex;align-items:center;justify-content:center;
+            color:var(--red);font-family:'Anton',sans-serif;font-size:14px;letter-spacing:1px;
+        }
+        .nav-logo-name{font-weight:800;font-size:16px;color:var(--black);letter-spacing:0.02em;}
+        .nav-links{display:flex;gap:36px;}
+        .nav-link{font-weight:600;font-size:14px;color:var(--black);opacity:.65;text-decoration:none;transition:opacity .2s;}
+        .nav-link:hover{opacity:1;}
+        .nav-cta{
+            background:var(--black);color:#fff;
+            font-weight:700;font-size:13px;
+            padding:11px 26px;border-radius:40px;text-decoration:none;
+            display:flex;align-items:center;gap:8px;
+            transition:background .2s,transform .2s;letter-spacing:0.03em;
+        }
+        .nav-cta:hover{background:var(--off-black);transform:scale(1.03);}
+
+        /* ── HERO ── */
+        #hero{
+            position:relative;min-height:100vh;padding-top:68px;overflow:hidden;
+            background-color:var(--sage-bg);
+            background-image:
+                linear-gradient(rgba(0,0,0,.055) 1px,transparent 1px),
+                linear-gradient(90deg,rgba(0,0,0,.055) 1px,transparent 1px);
+            background-size:48px 48px;
+        }
+        .hero-inner{
+            max-width:1320px;margin:0 auto;
+            padding:70px 44px 120px;
+            display:grid;grid-template-columns:1fr 400px;
+            gap:40px;align-items:center;
+            min-height:calc(100vh - 68px);
+        }
+        .hero-eyebrow{
+            display:inline-flex;align-items:center;gap:8px;
+            background:rgba(0,0,0,.08);border:1px solid rgba(0,0,0,.12);
+            padding:6px 16px;border-radius:30px;
+            font-size:11px;font-weight:700;letter-spacing:.12em;
+            text-transform:uppercase;color:var(--black);margin-bottom:26px;
+        }
+        .eyebrow-dot{width:7px;height:7px;background:var(--red);border-radius:50%;animation:blink 1.4s ease-in-out infinite;}
+        @keyframes blink{0%,100%{opacity:1}50%{opacity:.25}}
+
+        .hero-t1{
+            font-family:'Anton',sans-serif;
+            font-size:clamp(80px,11vw,148px);
+            line-height:.88;color:var(--black);
+            letter-spacing:.01em;display:block;
+        }
+        .hero-t2{
+            font-family:'Anton',sans-serif;
+            font-size:clamp(80px,11vw,148px);
+            line-height:.88;color:transparent;
+            -webkit-text-stroke:3px var(--black);
+            letter-spacing:.01em;display:block;
+        }
+        .hero-desc{
+            font-size:15.5px;line-height:1.75;
+            color:rgba(0,0,0,.58);max-width:400px;
+            margin:26px 0 36px;font-weight:500;
+        }
+        .hero-btns{display:flex;gap:12px;flex-wrap:wrap;}
+        .btn-red{
+            background:var(--red);color:#fff;font-weight:700;font-size:14px;
+            padding:15px 34px;border-radius:50px;text-decoration:none;
+            display:inline-flex;align-items:center;gap:9px;
+            transition:background .2s,transform .2s;letter-spacing:.03em;
+        }
+        .btn-red:hover{background:var(--red-dk);transform:scale(1.04);}
+        .btn-outline{
+            background:transparent;color:var(--black);
+            border:2px solid rgba(0,0,0,.25);font-weight:700;font-size:14px;
+            padding:13px 30px;border-radius:50px;text-decoration:none;
+            display:inline-flex;align-items:center;gap:9px;
+            transition:border-color .2s,background .2s,transform .2s;
+        }
+        .btn-outline:hover{border-color:var(--black);background:rgba(0,0,0,.06);transform:scale(1.03);}
+
+        /* tags */
+        .tag-chips{display:flex;gap:10px;margin-top:32px;flex-wrap:wrap;}
+        .chip{
+            padding:5px 14px;border-radius:20px;
+            font-size:11px;font-weight:700;letter-spacing:.08em;
+            color:rgba(0,0,0,.55);background:rgba(0,0,0,.09);
+        }
+        .chip.accent{color:var(--red);background:rgba(232,48,42,.12);}
+
+        /* hero right card */
+        .hero-card-wrap{position:relative;display:flex;justify-content:center;align-items:center;}
+        .hero-ring1{
+            position:absolute;width:390px;height:390px;border-radius:50%;
+            border:1.5px dashed rgba(0,0,0,.13);
+            top:50%;left:50%;transform:translate(-50%,-50%);
+        }
+        .hero-ring2{
+            position:absolute;width:280px;height:280px;border-radius:50%;
+            background:rgba(255,255,255,.18);
+            top:50%;left:50%;transform:translate(-50%,-50%);
+        }
+        .hero-card{
+            width:330px;z-index:2;
+            background:rgba(255,255,255,.32);
+            border:1.5px solid rgba(255,255,255,.5);
+            border-radius:28px;backdrop-filter:blur(12px);
+            padding:34px 28px;
+            display:flex;flex-direction:column;align-items:center;gap:22px;
+        }
+        .hc-icon{
+            width:76px;height:76px;background:var(--black);border-radius:18px;
+            display:flex;align-items:center;justify-content:center;
+            color:var(--red);font-size:32px;
+        }
+        .hc-name{font-family:'Anton',sans-serif;font-size:26px;color:var(--black);text-align:center;letter-spacing:.04em;}
+        .hc-sub{font-family:'Syne Mono',monospace;font-size:11px;color:rgba(0,0,0,.45);text-align:center;letter-spacing:.06em;}
+        .hc-stats{
+            display:flex;width:100%;
+            background:rgba(0,0,0,.1);border-radius:50px;overflow:hidden;
+        }
+        .hc-stat{flex:1;text-align:center;padding:12px 6px;border-right:1px solid rgba(0,0,0,.07);}
+        .hc-stat:last-child{border-right:none;}
+        .hc-stat-n{font-family:'Anton',sans-serif;font-size:22px;color:var(--black);line-height:1;}
+        .hc-stat-l{font-size:9px;font-weight:700;color:rgba(0,0,0,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:1px;}
+        .barcode{
+            background:repeating-linear-gradient(90deg,#111 0,#111 2px,transparent 2px,transparent 5px,#111 5px,#111 7px,transparent 7px,transparent 10px,#111 10px,#111 13px,transparent 13px,transparent 16px,#111 16px,#111 17px,transparent 17px,transparent 20px,#111 20px,#111 23px,transparent 23px,transparent 25px);
+            height:30px;width:96px;border-radius:2px;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        /* floating elems */
+        .f-bubble{
+            position:absolute;
+            background:var(--black);color:#fff;
+            font-size:11px;font-weight:700;
+            padding:7px 16px;border-radius:30px;
+            white-space:nowrap;letter-spacing:.02em;
+            z-index:5;
+        }
+        .f-sticker{
+            position:absolute;
+            background:var(--red);color:#fff;
+            font-weight:800;font-size:11px;
+            padding:10px 14px;border-radius:12px;
+            text-transform:uppercase;letter-spacing:.06em;line-height:1.4;
+            z-index:5;
+        }
+        .f-badge{
+            position:absolute;
+            width:72px;height:72px;border-radius:50%;
+            border:2px solid var(--black);
+            display:flex;align-items:center;justify-content:center;
+            z-index:5;animation:spin 14s linear infinite;
+        }
+        @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+        .f-badge-inner{font-size:18px;animation:spin 14s linear infinite reverse;}
 
-        body {
-            background-color: var(--off-white);
-            color: var(--black);
-            font-family: 'Syne', sans-serif;
-            overflow-x: hidden;
-            cursor: default;
-        }
+        /* hero wave */
+        .hero-wave{position:absolute;bottom:-1px;left:0;right:0;line-height:0;z-index:5;}
+        .hero-wave svg{display:block;}
 
-        ::selection { background: var(--lime); color: var(--black); }
+        /* ── MARQUEE ── */
+        .marquee-wrap{background:var(--black);padding:15px 0;overflow:hidden;}
+        .marquee-inner{display:flex;animation:marquee 22s linear infinite;}
+        .mi{font-family:'Anton',sans-serif;font-size:15px;letter-spacing:.12em;flex-shrink:0;margin-right:48px;white-space:nowrap;}
+        .mi.w{color:white;}.mi.r{color:var(--red);}
+        @keyframes marquee{from{transform:translateX(0)}to{transform:translateX(-50%)}}
 
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-track { background: var(--sage-pale); }
-        ::-webkit-scrollbar-thumb { background: var(--sage-dark); border-radius: 10px; }
+        /* ── PRODUCTS ── */
+        #products{background:var(--white);padding:90px 0;}
+        .sec-wrap{max-width:1320px;margin:0 auto;padding:0 44px;}
+        .sec-header{display:flex;justify-content:space-between;align-items:flex-end;flex-wrap:wrap;gap:24px;margin-bottom:52px;}
+        .sec-ey{font-family:'Syne Mono',monospace;font-size:11px;color:var(--gray);letter-spacing:.18em;text-transform:uppercase;margin-bottom:10px;}
+        .sec-title{font-family:'Anton',sans-serif;font-size:clamp(44px,5.5vw,78px);line-height:.92;color:var(--black);}
+        .filter-row{display:flex;gap:8px;flex-wrap:wrap;}
+        .pill{
+            padding:9px 22px;border-radius:40px;border:1.5px solid var(--border);
+            background:white;cursor:pointer;
+            font-family:'Syne',sans-serif;font-weight:700;font-size:12px;
+            color:var(--gray);transition:all .18s;letter-spacing:.02em;
+        }
+        .pill:hover{border-color:var(--black);color:var(--black);}
+        .pill.active{background:var(--black);color:white;border-color:var(--black);}
 
-        .display { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.02em; }
-        .mono { font-family: 'Syne Mono', monospace; }
+        .pgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(258px,1fr));gap:22px;}
+        .pcard{
+            background:white;border:1.5px solid var(--border);border-radius:18px;
+            overflow:hidden;
+            transition:transform .28s,box-shadow .28s,border-color .28s;
+        }
+        .pcard:hover{transform:translateY(-8px);box-shadow:0 24px 64px rgba(0,0,0,.1);border-color:rgba(0,0,0,.16);}
+        .pcard-img{
+            height:182px;background:var(--sage-lt);
+            display:flex;align-items:center;justify-content:center;
+            overflow:hidden;position:relative;
+        }
+        .pcard-img img{width:100%;height:100%;object-fit:cover;transition:transform .4s;}
+        .pcard:hover .pcard-img img{transform:scale(1.06);}
+        .pcard-fallback{
+            display:none;position:absolute;inset:0;
+            flex-direction:column;align-items:center;justify-content:center;gap:8px;
+            color:var(--sage-dk);
+        }
+        .badge-hot{
+            position:absolute;top:10px;left:10px;
+            background:var(--red);color:#fff;
+            font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;
+            letter-spacing:.06em;text-transform:uppercase;
+        }
+        .badge-cat{
+            position:absolute;top:10px;left:10px;
+            background:rgba(0,0,0,.6);color:#fff;
+            font-size:10px;font-weight:700;padding:4px 10px;border-radius:20px;
+            letter-spacing:.06em;text-transform:uppercase;backdrop-filter:blur(4px);
+        }
+        .pcard-body{padding:20px 22px 22px;}
+        .pcard-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px;}
+        .pcard-name{font-weight:800;font-size:15px;color:var(--black);line-height:1.25;flex:1;padding-right:10px;}
+        .pcard-price{font-family:'Anton',sans-serif;font-size:17px;color:var(--red);letter-spacing:.02em;flex-shrink:0;}
+        .pcard-desc{font-size:12.5px;color:var(--gray);line-height:1.65;margin-bottom:18px;font-weight:500;}
+        .pcard-acts{display:grid;grid-template-columns:1fr 1fr;gap:9px;}
+        .pa-buy{
+            text-align:center;padding:10px;background:var(--black);color:#fff;
+            border-radius:10px;font-size:12px;font-weight:700;letter-spacing:.04em;
+            text-decoration:none;transition:background .18s;
+        }
+        .pa-buy:hover{background:var(--off-black);}
+        .pa-det{
+            text-align:center;padding:10px;background:transparent;color:var(--black);
+            border:1.5px solid var(--border);border-radius:10px;
+            font-size:12px;font-weight:700;letter-spacing:.04em;
+            text-decoration:none;transition:border-color .18s;
+        }
+        .pa-det:hover{border-color:var(--black);}
+        .prod-footer{text-align:center;margin-top:44px;font-family:'Syne Mono',monospace;font-size:12px;color:var(--gray);letter-spacing:.1em;}
 
-        /* Hero background - sage green */
-        .hero-bg { background-color: var(--sage); }
+        /* ── STATS ── */
+        #stats{background:var(--sage-bg);padding:64px 0;}
+        .sgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:18px;}
+        .scard{
+            background:rgba(255,255,255,.32);border:1.5px solid rgba(255,255,255,.52);
+            border-radius:18px;padding:30px 24px;text-align:center;
+            backdrop-filter:blur(8px);transition:transform .2s;
+        }
+        .scard:hover{transform:translateY(-4px);}
+        .scard-icon{font-size:24px;color:var(--black);opacity:.6;margin-bottom:12px;}
+        .scard-n{font-family:'Anton',sans-serif;font-size:50px;color:var(--black);line-height:1;}
+        .scard-l{font-size:13px;font-weight:600;color:rgba(0,0,0,.5);margin-top:4px;letter-spacing:.04em;}
 
-        /* Barcode decoration */
-        .barcode {
-            background: repeating-linear-gradient(
-                90deg,
-                var(--black) 0px, var(--black) 2px,
-                transparent 2px, transparent 4px,
-                var(--black) 4px, var(--black) 5px,
-                transparent 5px, transparent 8px,
-                var(--black) 8px, var(--black) 11px,
-                transparent 11px, transparent 13px,
-                var(--black) 13px, var(--black) 14px,
-                transparent 14px, transparent 17px,
-                var(--black) 17px, var(--black) 19px,
-                transparent 19px, transparent 21px,
-                var(--black) 21px, var(--black) 22px,
-                transparent 22px, transparent 25px
-            );
-            height: 36px;
-            width: 120px;
-            border-radius: 2px;
+        /* ── TRUST VOTE ── */
+        #trust-vote{background:var(--white);border-top:1px solid var(--border);padding:90px 0;}
+        .tv-inner{max-width:520px;margin:0 auto;padding:0 44px;text-align:center;}
+        .vote-btn{
+            width:90px;height:90px;border-radius:50%;
+            border:2px solid var(--border);background:white;
+            display:flex;align-items:center;justify-content:center;
+            cursor:pointer;margin:0 auto 28px;
+            transition:all .3s;outline:none;
         }
+        .vote-btn:hover{border-color:var(--red);transform:scale(1.07);}
+        .vote-btn.voted{border-color:var(--red);background:#fff2f2;}
+        .vote-n{font-family:'Anton',sans-serif;font-size:84px;color:var(--black);line-height:1;}
+        .vote-lbl{font-size:13px;color:var(--gray);margin-top:8px;font-weight:600;}
+        @keyframes hpop{0%{transform:scale(1)}40%{transform:scale(1.4)}100%{transform:scale(1)}}
+        .hpop{animation:hpop .45s ease;}
 
-        /* Tag label */
-        .tag-label {
-            background: var(--lime);
-            color: var(--black);
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 10px;
-            padding: 4px 10px;
-            border-radius: 20px;
-            letter-spacing: 0.05em;
-            display: inline-flex;
-            align-items: center;
-            gap: 5px;
-            text-transform: uppercase;
+        /* ── CONTACT ── */
+        #contact{background:var(--black);padding:90px 0;}
+        .cgrid{display:grid;grid-template-columns:1fr 1fr;gap:72px;align-items:start;}
+        .c-ey{font-family:'Syne Mono',monospace;font-size:11px;color:var(--sage);letter-spacing:.18em;text-transform:uppercase;margin-bottom:18px;}
+        .c-title{font-family:'Anton',sans-serif;font-size:clamp(48px,5.5vw,80px);color:white;line-height:.9;letter-spacing:.01em;margin-bottom:22px;}
+        .c-title span{color:var(--red);}
+        .c-desc{font-size:14px;color:rgba(255,255,255,.42);line-height:1.75;max-width:360px;font-weight:500;}
+        .c-warn{
+            margin-top:28px;padding:16px 20px;
+            background:rgba(232,48,42,.1);border:1px solid rgba(232,48,42,.24);
+            border-radius:14px;display:flex;gap:12px;align-items:flex-start;
         }
+        .c-warn i{color:var(--red);font-size:13px;margin-top:2px;flex-shrink:0;}
+        .c-warn p{font-size:12px;color:rgba(255,255,255,.45);line-height:1.65;font-weight:500;}
+        .c-channels{display:flex;flex-direction:column;gap:14px;}
+        .chan{
+            display:flex;align-items:center;gap:20px;
+            padding:22px 24px;
+            background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);
+            border-radius:18px;text-decoration:none;
+            transition:background .2s,border-color .2s,transform .2s;
+        }
+        .chan:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.18);transform:translateX(4px);}
+        .chan-ico{width:50px;height:50px;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0;}
+        .chan-name{font-weight:800;font-size:16px;color:white;margin-bottom:3px;}
+        .chan-sub{font-family:'Syne Mono',monospace;font-size:12px;color:rgba(255,255,255,.32);}
+        .chan-arr{color:rgba(255,255,255,.22);margin-left:auto;font-size:13px;}
+        .footer-bar{
+            margin-top:80px;padding-top:32px;
+            border-top:1px solid rgba(255,255,255,.07);
+            display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+        }
+        .f-logo{display:flex;align-items:center;gap:10px;}
+        .f-logo-box{width:32px;height:32px;background:var(--red);border-radius:7px;display:flex;align-items:center;justify-content:center;font-family:'Anton',sans-serif;color:white;font-size:12px;}
+        .f-logo-name{font-weight:800;font-size:14px;color:white;}
+        .f-copy{font-family:'Syne Mono',monospace;font-size:11px;color:rgba(255,255,255,.2);}
 
-        /* Speech bubble */
-        .bubble {
-            background: var(--black);
-            color: white;
-            font-family: 'Syne', sans-serif;
-            font-weight: 600;
-            font-size: 11px;
-            padding: 6px 14px;
-            border-radius: 20px;
-            position: relative;
-            display: inline-block;
-        }
-        .bubble::after {
-            content: '';
-            position: absolute;
-            bottom: -6px;
-            left: 16px;
-            border: 6px solid transparent;
-            border-top-color: var(--black);
-            border-bottom: 0;
-            width: 0; height: 0;
-        }
-        .bubble.right::after { left: auto; right: 16px; }
+        /* ── Appear ── */
+        .appear{opacity:0;transform:translateY(26px);transition:opacity .55s ease,transform .55s ease;}
+        .appear.vis{opacity:1;transform:none;}
 
-        /* Nav */
-        nav {
-            position: fixed;
-            top: 0; left: 0; width: 100%;
-            z-index: 100;
-            padding: 0 40px;
-            height: 64px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            transition: all 0.3s;
+        /* ── Responsive ── */
+        @media(max-width:960px){
+            .hero-inner{grid-template-columns:1fr;}
+            .hero-card-wrap{margin-top:20px;}
+            .cgrid{grid-template-columns:1fr;gap:48px;}
+            #nav .nav-links{display:none;}
         }
-        nav.scrolled {
-            background: rgba(168, 185, 154, 0.95);
-            backdrop-filter: blur(12px);
-            border-bottom: 1px solid rgba(255,255,255,0.2);
-        }
-        nav.hero-zone {
-            background: transparent;
-        }
-
-        /* Product cards */
-        .product-card {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 16px;
-            overflow: hidden;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-        .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 20px 60px rgba(0,0,0,0.12);
-        }
-
-        /* Badge hot */
-        .badge-hot {
-            background: #FF4B4B;
-            color: white;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-family: 'Syne', sans-serif;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-        .badge-new {
-            background: var(--sage);
-            color: white;
-            font-size: 9px;
-            font-weight: 700;
-            padding: 3px 8px;
-            border-radius: 20px;
-            font-family: 'Syne', sans-serif;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-        }
-
-        /* Filter pills */
-        .filter-pill {
-            padding: 8px 20px;
-            border-radius: 30px;
-            border: 1.5px solid var(--border);
-            background: white;
-            font-family: 'Syne', sans-serif;
-            font-weight: 600;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-            color: var(--warm-gray);
-        }
-        .filter-pill:hover { border-color: var(--sage); color: var(--black); }
-        .filter-pill.active {
-            background: var(--black);
-            color: white;
-            border-color: var(--black);
-        }
-
-        /* CTA Button */
-        .btn-primary {
-            background: var(--lime);
-            color: var(--black);
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-            padding: 14px 32px;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-primary:hover { background: #b8d336; transform: scale(1.03); }
-
-        .btn-dark {
-            background: var(--black);
-            color: white;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 13px;
-            padding: 14px 32px;
-            border-radius: 40px;
-            border: none;
-            cursor: pointer;
-            transition: all 0.2s;
-            letter-spacing: 0.05em;
-            text-decoration: none;
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-        }
-        .btn-dark:hover { background: #2a2a28; transform: scale(1.03); }
-
-        /* Stat box */
-        .stat-box {
-            background: white;
-            border: 1px solid var(--border);
-            border-radius: 14px;
-            padding: 20px 28px;
-        }
-
-        /* Marquee */
-        .marquee-track {
-            display: flex;
-            animation: marquee 20s linear infinite;
-            white-space: nowrap;
-        }
-        @keyframes marquee {
-            from { transform: translateX(0); }
-            to { transform: translateX(-50%); }
-        }
-
-        /* Section divider line */
-        .divider { border: none; border-top: 1px solid var(--border); margin: 0; }
-
-        /* Heart vote */
-        .vote-btn {
-            width: 80px; height: 80px;
-            border-radius: 50%;
-            border: 2px solid var(--border);
-            background: white;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .vote-btn:hover { border-color: #FF4B4B; transform: scale(1.05); }
-        .vote-btn.voted { border-color: #FF4B4B; background: #FFF0F0; }
-
-        /* Image placeholder */
-        .img-placeholder {
-            background: linear-gradient(135deg, var(--sage-pale), var(--sage-light));
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--sage-dark);
-            font-family: 'Syne Mono', monospace;
-            font-size: 10px;
-        }
-
-        /* Sticker element */
-        .sticker {
-            background: var(--black);
-            color: white;
-            padding: 10px 18px;
-            border-radius: 10px;
-            font-family: 'Syne', sans-serif;
-            font-weight: 700;
-            font-size: 12px;
-            letter-spacing: 0.03em;
-            line-height: 1.3;
-            text-transform: uppercase;
-        }
-
-        /* Fade in animation */
-        @keyframes fadeUp {
-            from { opacity: 0; transform: translateY(30px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        .fade-up { animation: fadeUp 0.6s ease forwards; }
-        .delay-1 { animation-delay: 0.1s; opacity: 0; }
-        .delay-2 { animation-delay: 0.2s; opacity: 0; }
-        .delay-3 { animation-delay: 0.3s; opacity: 0; }
-        .delay-4 { animation-delay: 0.4s; opacity: 0; }
-
-        /* Heart pulse */
-        @keyframes heartPulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.2); }
-        }
-        .heart-pulse { animation: heartPulse 0.6s ease; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            nav { padding: 0 20px; }
-            .hero-title { font-size: 18vw !important; }
+        @media(max-width:600px){
+            .hero-inner,.sec-wrap,.tv-inner,#contact .sec-wrap{padding:0 24px;}
+            #nav{padding:0 24px;}
+            .hero-inner{padding:50px 24px 80px;}
         }
     </style>
 </head>
 <body>
-    <div id="root"></div>
 
-    <script type="text/babel">
-        const { useState, useEffect, useRef } = React;
-        const { motion, AnimatePresence } = window.Motion;
+<!-- ══════════════ LOADER ══════════════ -->
+<div id="loader">
+    <div>
+        <div class="loader-title">TREND'S<br>SPHERE</div>
+        <div class="loader-sub">Digital Intelligence Platform</div>
+    </div>
+    <div id="loader-track"><div id="loader-fill"></div></div>
+    <div id="loader-txt"></div>
+</div>
 
-        // --- DATA ---
-        const products = [
-            { id: 1, name: "Uncensored GPT", price: "$200", image: "ug.png", category: "Tools", desc: "No limits. No filters. Raw AI power at your fingertips.", link: "ug.html", hot: true },
-            { id: 2, name: "28 Days Mastery", price: "See Plans", image: "28days.png", category: "Courses", desc: "Complete cybersecurity career track. Zero to hero.", link: "28days.html", hot: true },
-            { id: 3, name: "SSN + D.O.B", price: "$10", image: "ssn.png", category: "Data", desc: "Real-time verified data sources. Instant access.", link: "ssn.html" },
-            { id: 4, name: "Premium Enrolls", price: "$65+", image: "enroll.png", category: "Data", desc: "High quality enrollments. Bulk pricing available.", link: "enroll.html" },
-            { id: 5, name: "Dark Web Course", price: "$6", image: "dwc.png", category: "Courses", desc: "Navigate the hidden web safely and effectively.", link: "dwc.html" },
-            { id: 6, name: "SMM Panel Course", price: "$2", image: "smm.png", category: "Courses", desc: "Build your own social media service empire.", link: "smm.html" },
-            { id: 7, name: "Binning Course", price: "$5", image: "bin.png", category: "Courses", desc: "Step-by-step trial and binning mastery.", link: "bin.html" },
-            { id: 8, name: "Basic Hacking", price: "$6", image: "bhc.png", category: "Courses", desc: "Zero to Pro foundational hacking skills.", link: "bhc.html" },
-            { id: 9, name: "Custom Py Script", price: "$30+", image: "cps.png", category: "Services", desc: "Automation solutions tailored precisely to you.", link: "cps.html" },
-            { id: 10, name: "Custom Py Tool", price: "$30+", image: "cpt.png", category: "Services", desc: "Unique tools built for unique requirements.", link: "cpt.html" },
-            { id: 11, name: "Web Development", price: "$30+", image: "wd.png", category: "Services", desc: "Modern, responsive, high-performance websites.", link: "wd.html" },
-            { id: 12, name: "Book Meeting", price: "$3", image: "book.png", category: "Services", desc: "One-on-one consultation with Trend Hive team.", link: "book.html" },
-            { id: 13, name: "Track 1 & 2 (No Pin)", price: "$200", image: "t1wp.png", category: "Data", desc: "Fast combo access, verified sources only.", link: "t1wp.html" },
-            { id: 14, name: "Track 1 & 2 (PIN)", price: "$250", image: "t2wp.png", category: "Data", desc: "Full access with verified PIN included.", link: "t2wp.html", hot: true },
-            { id: 15, name: "Android RAT", price: "From $130", image: "rat.jpeg", category: "Tools", desc: "Stealthy remote access tool for Android.", link: "rat.html", hot: true },
-            { id: 16, name: "Credit Card Fraud Awareness [2026]", price: "$100", image: "cc-awareness.jpeg", category: "Courses", desc: "Defensive analysis of carding workflows and anti-fraud systems.", link: "cc-awareness.html", hot: true },
-            { id: 17, name: "Digital Wallet Security & BIN Risk [2025]", price: "$50", image: "wallet-bin.jpeg", category: "Courses", desc: "Risk assessment of wallet enrollments and BIN exposure vectors.", link: "wallet-bin.html" },
-            { id: 18, name: "GTE FCU Enrollment Risk Case Study", price: "$35", image: "gte-case.jpeg", category: "Research", desc: "Research into identity verification gaps and enrollment defense.", link: "gte-case.html" },
-            { id: 19, name: "Banking Fraud Schemes & Detection [2026]", price: "$80", image: "bank-fraud.jpeg", category: "Research", desc: "Comprehensive study of banking vectors and detection logic.", link: "bank-fraud.html" },
-        ];
+<!-- ══════════════ APP ══════════════ -->
+<div id="app" style="display:none;opacity:0;transition:opacity .5s ease;">
 
-        // --- NAVBAR ---
-        const Navbar = () => {
-            const [scrolled, setScrolled] = useState(false);
-            useEffect(() => {
-                const onScroll = () => setScrolled(window.scrollY > 60);
-                window.addEventListener('scroll', onScroll);
-                return () => window.removeEventListener('scroll', onScroll);
-            }, []);
+    <!-- NAV -->
+    <nav id="nav">
+        <a href="#" class="nav-logo">
+            <div class="nav-logo-box">TS</div>
+            <span class="nav-logo-name">Trend's Sphere</span>
+        </a>
+        <div class="nav-links">
+            <a href="#products" class="nav-link">Products</a>
+            <a href="#trust-vote" class="nav-link">Trust</a>
+            <a href="#contact" class="nav-link">Contact</a>
+        </div>
+        <a href="https://t.me/trendhiveacademy" class="nav-cta">
+            <i class="fab fa-telegram-plane"></i> Join Channel
+        </a>
+    </nav>
 
-            return (
-                <nav className={scrolled ? 'scrolled' : 'hero-zone'}>
-                    {/* Logo */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                        <div style={{
-                            width: 32, height: 32,
-                            background: 'var(--black)',
-                            borderRadius: 8,
-                            display: 'flex', alignItems: 'center', justifyContent: 'center',
-                            color: 'var(--lime)',
-                            fontSize: 14,
-                            fontWeight: 900,
-                            fontFamily: 'Bebas Neue, sans-serif',
-                            letterSpacing: 1
-                        }}>TS</div>
-                        <span style={{
-                            fontFamily: 'Syne, sans-serif',
-                            fontWeight: 800,
-                            fontSize: 15,
-                            color: 'var(--black)',
-                            letterSpacing: '0.02em'
-                        }}>Trend's Sphere</span>
+    <!-- HERO -->
+    <section id="hero">
+        <div class="hero-inner">
+            <!-- Left -->
+            <div>
+                <div class="hero-eyebrow appear">
+                    <span class="eyebrow-dot"></span>
+                    Secure · Verified · Elite Platform
+                </div>
+                <div class="appear" style="transition-delay:.1s">
+                    <span class="hero-t1">DIGITAL</span>
+                    <span class="hero-t2">DOMINANCE</span>
+                </div>
+                <p class="hero-desc appear" style="transition-delay:.2s">
+                    A curated marketplace for cybersecurity tools, elite courses, and verified intelligence data. Zero limits. Maximum impact.
+                </p>
+                <div class="hero-btns appear" style="transition-delay:.3s">
+                    <a href="#products" class="btn-red">Browse Products <i class="fas fa-arrow-right" style="font-size:12px"></i></a>
+                    <a href="https://wa.me/919204465448" class="btn-outline"><i class="fab fa-whatsapp"></i> Chat Now</a>
+                </div>
+                <div class="tag-chips appear" style="transition-delay:.4s">
+                    <span class="chip">TOOLS</span>
+                    <span class="chip">COURSES</span>
+                    <span class="chip">DATA</span>
+                    <span class="chip accent">RESEARCH</span>
+                    <span class="chip">SERVICES</span>
+                </div>
+            </div>
+
+            <!-- Right -->
+            <div class="hero-card-wrap">
+                <div class="hero-ring1"></div>
+                <div class="hero-ring2"></div>
+
+                <div class="hero-card appear" style="transition-delay:.3s">
+                    <div class="hc-icon"><i class="fas fa-shield-alt"></i></div>
+                    <div>
+                        <div class="hc-name">TREND'S SPHERE</div>
+                        <div class="hc-sub">Verified · Secure · Elite</div>
                     </div>
-
-                    {/* Nav links */}
-                    <div style={{ display: 'flex', alignItems: 'center', gap: 32 }} className="nav-links">
-                        {[['Products', '#products'], ['Trust', '#trust-vote'], ['Contact', '#contact']].map(([label, href]) => (
-                            <a key={label} href={href} style={{
-                                fontFamily: 'Syne, sans-serif',
-                                fontWeight: 600,
-                                fontSize: 13,
-                                color: 'var(--black)',
-                                textDecoration: 'none',
-                                opacity: 0.7,
-                                transition: 'opacity 0.2s'
-                            }}
-                            onMouseEnter={e => e.target.style.opacity = 1}
-                            onMouseLeave={e => e.target.style.opacity = 0.7}
-                            >{label}</a>
-                        ))}
+                    <div class="hc-stats">
+                        <div class="hc-stat"><div class="hc-stat-n">19+</div><div class="hc-stat-l">Products</div></div>
+                        <div class="hc-stat"><div class="hc-stat-n">500+</div><div class="hc-stat-l">Members</div></div>
+                        <div class="hc-stat"><div class="hc-stat-n">$2</div><div class="hc-stat-l">From</div></div>
                     </div>
-
-                    {/* CTA */}
-                    <a href="https://t.me/trendhiveacademy" className="btn-primary" style={{ padding: '10px 22px', fontSize: 12 }}>
-                        <i className="fab fa-telegram-plane"></i>
-                        Join Channel
-                    </a>
-                </nav>
-            );
-        };
-
-        // --- HERO ---
-        const Hero = () => {
-            return (
-                <section className="hero-bg" style={{ minHeight: '100vh', position: 'relative', overflow: 'hidden', paddingTop: 64 }}>
-                    {/* Background texture */}
-                    <div style={{
-                        position: 'absolute', inset: 0,
-                        backgroundImage: 'radial-gradient(circle at 80% 50%, rgba(255,255,255,0.15) 0%, transparent 60%)',
-                        pointerEvents: 'none'
-                    }} />
-
-                    <div style={{ 
-                        maxWidth: 1280, margin: '0 auto',
-                        padding: '60px 40px 40px',
-                        display: 'grid',
-                        gridTemplateColumns: '1fr 1fr',
-                        gap: 40,
-                        alignItems: 'center',
-                        minHeight: 'calc(100vh - 64px)',
-                        position: 'relative', zIndex: 2
-                    }}>
-                        {/* LEFT side */}
-                        <div>
-                            {/* Small label */}
-                            <div className="fade-up delay-1" style={{ marginBottom: 24 }}>
-                                <span className="tag-label">
-                                    <span style={{ width: 6, height: 6, background: 'var(--black)', borderRadius: '50%', display: 'inline-block' }}></span>
-                                    Digital Intelligence Platform
-                                </span>
-                            </div>
-
-                            {/* Big title */}
-                            <div className="fade-up delay-2">
-                                <h1 className="display fade-up delay-2" style={{
-                                    fontSize: 'clamp(80px, 12vw, 160px)',
-                                    lineHeight: 0.9,
-                                    color: 'white',
-                                    marginBottom: 16
-                                }}>
-                                    DIGITAL
-                                </h1>
-                                <h1 className="display" style={{
-                                    fontSize: 'clamp(80px, 12vw, 160px)',
-                                    lineHeight: 0.9,
-                                    color: 'var(--black)',
-                                    marginBottom: 0
-                                }}>
-                                    DOMINANCE
-                                </h1>
-                            </div>
-
-                            {/* Sub-words stacked */}
-                            <div className="fade-up delay-3" style={{ display: 'flex', gap: 12, marginTop: 20, marginBottom: 32, alignItems: 'center' }}>
-                                {['TOOLS', 'COURSES', 'DATA'].map((w, i) => (
-                                    <span key={w} style={{
-                                        fontFamily: 'Syne, sans-serif',
-                                        fontWeight: 800,
-                                        fontSize: 11,
-                                        color: i === 0 ? 'var(--black)' : 'rgba(0,0,0,0.45)',
-                                        letterSpacing: '0.15em'
-                                    }}>{w}{i < 2 ? ' ·' : ''}</span>
-                                ))}
-                            </div>
-
-                            {/* Description */}
-                            <p className="fade-up delay-3" style={{
-                                fontFamily: 'Syne, sans-serif',
-                                fontWeight: 400,
-                                fontSize: 15,
-                                color: 'rgba(0,0,0,0.65)',
-                                lineHeight: 1.7,
-                                maxWidth: 380,
-                                marginBottom: 36
-                            }}>
-                                A curated marketplace for digital intelligence assets — cybersecurity tools, elite courses, and verified data sources.
-                            </p>
-
-                            {/* Buttons */}
-                            <div className="fade-up delay-4" style={{ display: 'flex', gap: 12, alignItems: 'center', flexWrap: 'wrap' }}>
-                                <a href="#products" className="btn-primary">
-                                    Browse Products
-                                    <i className="fas fa-arrow-right" style={{ fontSize: 11 }}></i>
-                                </a>
-                                <a href="https://wa.me/919204465448" className="btn-dark">
-                                    <i className="fab fa-whatsapp"></i>
-                                    Contact
-                                </a>
-                            </div>
-                        </div>
-
-                        {/* RIGHT side — decorative elements */}
-                        <div style={{ position: 'relative', display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
-                            {/* Big circle */}
-                            <div style={{
-                                width: 420, height: 420,
-                                borderRadius: '50%',
-                                background: 'rgba(255,255,255,0.15)',
-                                position: 'absolute',
-                                right: -60, top: '50%',
-                                transform: 'translateY(-50%)',
-                                border: '1.5px solid rgba(255,255,255,0.3)'
-                            }} />
-
-                            {/* Product showcase placeholder */}
-                            <div style={{
-                                width: 340, height: 340,
-                                borderRadius: 24,
-                                background: 'rgba(255,255,255,0.2)',
-                                backdropFilter: 'blur(10px)',
-                                border: '1.5px solid rgba(255,255,255,0.4)',
-                                display: 'flex',
-                                flexDirection: 'column',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                position: 'relative',
-                                zIndex: 3
-                            }}>
-                                <i className="fas fa-shield-alt" style={{ fontSize: 60, color: 'white', opacity: 0.8, marginBottom: 16 }}></i>
-                                <div style={{ color: 'white', fontWeight: 800, fontSize: 18, fontFamily: 'Syne, sans-serif', letterSpacing: '0.05em' }}>TREND'S SPHERE</div>
-                                <div style={{ color: 'rgba(255,255,255,0.6)', fontSize: 11, fontFamily: 'Syne Mono, monospace', marginTop: 6 }}>Secure · Verified · Elite</div>
-
-                                {/* Stats inside card */}
-                                <div style={{ display: 'flex', gap: 24, marginTop: 28, background: 'rgba(0,0,0,0.15)', padding: '12px 24px', borderRadius: 50 }}>
-                                    {[['19+', 'Products'], ['500+', 'Members'], ['99%', 'Verified']].map(([n, l]) => (
-                                        <div key={l} style={{ textAlign: 'center' }}>
-                                            <div style={{ color: 'var(--lime)', fontSize: 16, fontWeight: 800, fontFamily: 'Bebas Neue, sans-serif', letterSpacing: 1 }}>{n}</div>
-                                            <div style={{ color: 'rgba(255,255,255,0.7)', fontSize: 9, fontFamily: 'Syne, sans-serif', letterSpacing: '0.1em', textTransform: 'uppercase' }}>{l}</div>
-                                        </div>
-                                    ))}
-                                </div>
-                            </div>
-
-                            {/* Floating speech bubble */}
-                            <div className="bubble" style={{ position: 'absolute', top: '15%', right: '10%', zIndex: 4 }}>
-                                "Who wouldn't want these?"
-                                <span style={{ marginLeft: 6 }}>🤍</span>
-                            </div>
-
-                            {/* Floating bottom badge */}
-                            <div className="sticker" style={{ position: 'absolute', bottom: '12%', left: '5%', zIndex: 4 }}>
-                                Timeless & Elite<br/>Intelligence
-                            </div>
-
-                            {/* Barcode */}
-                            <div style={{ position: 'absolute', bottom: '8%', right: '8%', zIndex: 4, display: 'flex', flexDirection: 'column', alignItems: 'center', gap: 4 }}>
-                                <div className="barcode"></div>
-                                <div className="mono" style={{ fontSize: 9, color: 'rgba(0,0,0,0.5)', letterSpacing: 3 }}>TS-2026</div>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* Bottom curve */}
-                    <div style={{
-                        position: 'absolute', bottom: -2, left: 0, right: 0, zIndex: 5,
-                        lineHeight: 0
-                    }}>
-                        <svg viewBox="0 0 1440 60" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ display: 'block' }}>
-                            <path d="M0 60 C360 0 1080 0 1440 60 L1440 60 L0 60 Z" fill="#F2F0EB"/>
-                        </svg>
-                    </div>
-                </section>
-            );
-        };
-
-        // --- MARQUEE STRIP ---
-        const MarqueeStrip = () => {
-            const items = ['TOOLS', 'COURSES', 'DATA', 'SERVICES', 'RESEARCH', 'SECURITY', 'INTELLIGENCE', 'VERIFIED'];
-            const doubled = [...items, ...items, ...items, ...items];
-            return (
-                <div style={{ background: 'var(--black)', padding: '14px 0', overflow: 'hidden' }}>
-                    <div className="marquee-track">
-                        {doubled.map((item, i) => (
-                            <span key={i} style={{
-                                fontFamily: 'Bebas Neue, sans-serif',
-                                fontSize: 14,
-                                color: i % 2 === 0 ? 'white' : 'var(--lime)',
-                                letterSpacing: '0.15em',
-                                marginRight: 40,
-                                flexShrink: 0
-                            }}>{item} {i % 2 === 1 ? '✦ ' : '— '}</span>
-                        ))}
+                    <div style="display:flex;flex-direction:column;align-items:center;gap:5px">
+                        <div class="barcode"></div>
+                        <span class="mono" style="font-size:8px;color:rgba(0,0,0,.32);letter-spacing:4px">TS-2026</span>
                     </div>
                 </div>
-            );
-        };
 
-        // --- PRODUCT CARD ---
-        const ProductCard = ({ product, index }) => {
-            return (
-                <motion.div
-                    layout
-                    initial={{ opacity: 0, y: 20 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    exit={{ opacity: 0, y: 20 }}
-                    transition={{ delay: index * 0.05, duration: 0.4 }}
-                    className="product-card"
-                >
-                    {/* Image area */}
-                    <div style={{ position: 'relative', height: 180, background: 'var(--sage-pale)' }} className="img-placeholder">
-                        <img
-                            src={product.image}
-                            alt={product.name}
-                            style={{ width: '100%', height: '100%', objectFit: 'cover', transition: 'transform 0.4s ease' }}
-                            onError={e => { e.target.style.display = 'none'; e.target.nextSibling.style.display = 'flex'; }}
-                        />
-                        <div style={{ display: 'none', width: '100%', height: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'column', gap: 8, position: 'absolute', top: 0, left: 0 }}>
-                            <i className="fas fa-box-open" style={{ fontSize: 32, color: 'var(--sage-dark)' }}></i>
-                            <span className="mono" style={{ fontSize: 10, color: 'var(--warm-gray)' }}>{product.category}</span>
-                        </div>
-                        {/* Badge */}
-                        <div style={{ position: 'absolute', top: 12, left: 12 }}>
-                            {product.hot
-                                ? <span className="badge-hot">🔥 Hot</span>
-                                : <span className="badge-new">{product.category}</span>
-                            }
-                        </div>
-                    </div>
+                <div class="f-bubble" style="top:-14px;right:-8px">"Who wouldn't want these?" 🤍</div>
+                <div class="f-sticker" style="bottom:-8px;left:-12px">Elite<br>Intelligence</div>
+                <div class="f-badge" style="bottom:24px;right:-26px">
+                    <svg viewBox="0 0 70 70" style="position:absolute;width:100%;height:100%">
+                        <path id="tc" d="M35,35 m-26,0 a26,26 0 1,1 52,0 a26,26 0 1,1 -52,0" fill="none"/>
+                        <text style="font-size:8px;font-family:Syne Mono;font-weight:700;letter-spacing:3.4px;fill:#111">
+                            <textPath href="#tc">SCROLL DOWN · SCROLL DOWN ·</textPath>
+                        </text>
+                    </svg>
+                    <span class="f-badge-inner">★</span>
+                </div>
+            </div>
+        </div>
 
-                    {/* Content */}
-                    <div style={{ padding: '18px 20px 20px' }}>
-                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start', marginBottom: 8 }}>
-                            <h3 style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 14, lineHeight: 1.3, color: 'var(--black)', flex: 1, paddingRight: 8 }}>{product.name}</h3>
-                            <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 800, fontSize: 13, color: 'var(--sage-dark)', flexShrink: 0 }}>{product.price}</span>
-                        </div>
-                        <p style={{ fontFamily: 'Syne, sans-serif', fontSize: 12, color: 'var(--warm-gray)', lineHeight: 1.6, marginBottom: 16 }}>{product.desc}</p>
+        <div class="hero-wave">
+            <svg viewBox="0 0 1440 72" xmlns="http://www.w3.org/2000/svg">
+                <path d="M0,72 C180,12 440,0 720,38 C1000,72 1260,16 1440,72 L1440,72 L0,72 Z" fill="#F5F3EE"/>
+            </svg>
+        </div>
+    </section>
 
-                        {/* Action buttons */}
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
-                            <a href="payments.html" style={{
-                                textAlign: 'center',
-                                padding: '9px 12px',
-                                background: 'var(--black)',
-                                color: 'white',
-                                borderRadius: 10,
-                                fontFamily: 'Syne, sans-serif',
-                                fontWeight: 700,
-                                fontSize: 11,
-                                textDecoration: 'none',
-                                transition: 'opacity 0.2s',
-                                letterSpacing: '0.04em'
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.opacity = 0.8}
-                            onMouseLeave={e => e.currentTarget.style.opacity = 1}
-                            >Buy Now</a>
-                            <a href={product.link} style={{
-                                textAlign: 'center',
-                                padding: '9px 12px',
-                                background: 'transparent',
-                                color: 'var(--black)',
-                                border: '1.5px solid var(--border)',
-                                borderRadius: 10,
-                                fontFamily: 'Syne, sans-serif',
-                                fontWeight: 600,
-                                fontSize: 11,
-                                textDecoration: 'none',
-                                transition: 'border-color 0.2s',
-                                letterSpacing: '0.04em'
-                            }}
-                            onMouseEnter={e => e.currentTarget.style.borderColor = 'var(--sage)'}
-                            onMouseLeave={e => e.currentTarget.style.borderColor = 'var(--border)'}
-                            >Details</a>
-                        </div>
-                    </div>
-                </motion.div>
-            );
-        };
+    <!-- MARQUEE -->
+    <div class="marquee-wrap"><div class="marquee-inner" id="mq"></div></div>
 
-        // --- PRODUCTS SECTION ---
-        const ProductsSection = () => {
-            const [filter, setFilter] = useState("All");
-            const categories = ["All", "Tools", "Courses", "Data", "Services", "Research"];
-            const filtered = products.filter(p => filter === "All" || p.category === filter);
+    <!-- PRODUCTS -->
+    <section id="products">
+        <div class="sec-wrap">
+            <div class="sec-header">
+                <div>
+                    <div class="sec-ey">// Product Catalog</div>
+                    <h2 class="sec-title">ALL<br>PRODUCTS</h2>
+                </div>
+                <div class="filter-row" id="fr"></div>
+            </div>
+            <div class="pgrid" id="pg"></div>
+            <div class="prod-footer" id="pf"></div>
+        </div>
+    </section>
 
-            return (
-                <section id="products" style={{ padding: '80px 0', background: 'var(--off-white)' }}>
-                    <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px' }}>
-                        {/* Header */}
-                        <div style={{ marginBottom: 48 }}>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end', flexWrap: 'wrap', gap: 24 }}>
-                                <div>
-                                    <div style={{ fontFamily: 'Syne Mono, monospace', fontSize: 11, color: 'var(--warm-gray)', letterSpacing: '0.15em', marginBottom: 10 }}>
-                                        // PRODUCT CATALOG
-                                    </div>
-                                    <h2 className="display" style={{ fontSize: 'clamp(48px, 6vw, 80px)', color: 'var(--black)', lineHeight: 0.95, letterSpacing: '0.01em' }}>
-                                        ALL PRODUCTS
-                                    </h2>
-                                </div>
-                                <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
-                                    {categories.map(cat => (
-                                        <button
-                                            key={cat}
-                                            onClick={() => setFilter(cat)}
-                                            className={`filter-pill ${filter === cat ? 'active' : ''}`}
-                                        >
-                                            {cat}
-                                        </button>
-                                    ))}
-                                </div>
-                            </div>
-                        </div>
+    <!-- STATS -->
+    <section id="stats">
+        <div class="sec-wrap"><div class="sgrid" id="sg"></div></div>
+    </section>
 
-                        {/* Grid */}
-                        <motion.div layout style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(240px, 1fr))', gap: 20 }}>
-                            <AnimatePresence>
-                                {filtered.map((p, i) => <ProductCard key={p.id} product={p} index={i} />)}
-                            </AnimatePresence>
-                        </motion.div>
+    <!-- TRUST VOTE -->
+    <section id="trust-vote">
+        <div class="tv-inner">
+            <div class="sec-ey" style="margin-bottom:12px">// Community Trust Score</div>
+            <h2 class="sec-title" style="margin-bottom:36px">RATE US</h2>
+            <button class="vote-btn" id="vb">
+                <i class="fas fa-heart" id="vh" style="font-size:30px;color:var(--border);transition:color .3s"></i>
+            </button>
+            <div class="vote-n" id="vc">0</div>
+            <div class="vote-lbl" id="vl">Verified community members</div>
+        </div>
+    </section>
 
-                        {/* Count */}
-                        <div style={{ marginTop: 40, textAlign: 'center', fontFamily: 'Syne Mono, monospace', fontSize: 11, color: 'var(--warm-gray)' }}>
-                            Showing {filtered.length} of {products.length} products
-                        </div>
-                    </div>
-                </section>
-            );
-        };
-
-        // --- STATS SECTION ---
-        const StatsSection = () => {
-            const stats = [
-                { n: '19+', l: 'Total Products', icon: 'fa-box-open' },
-                { n: '500+', l: 'Active Members', icon: 'fa-users' },
-                { n: '$2', l: 'Starting Price', icon: 'fa-tag' },
-                { n: '24/7', l: 'Support', icon: 'fa-headset' },
-            ];
-            return (
-                <div style={{ background: 'var(--sage)', padding: '60px 0' }}>
-                    <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: 16 }}>
-                        {stats.map(({ n, l, icon }) => (
-                            <div key={l} style={{ background: 'rgba(255,255,255,0.25)', borderRadius: 16, padding: '28px 24px', backdropFilter: 'blur(6px)', border: '1px solid rgba(255,255,255,0.4)', textAlign: 'center' }}>
-                                <i className={`fas ${icon}`} style={{ fontSize: 22, color: 'var(--black)', opacity: 0.7, marginBottom: 10, display: 'block' }}></i>
-                                <div className="display" style={{ fontSize: 40, color: 'var(--black)', lineHeight: 1 }}>{n}</div>
-                                <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 12, color: 'rgba(0,0,0,0.6)', marginTop: 4, letterSpacing: '0.05em' }}>{l}</div>
-                            </div>
-                        ))}
+    <!-- CONTACT -->
+    <section id="contact">
+        <div class="sec-wrap">
+            <div class="cgrid">
+                <div>
+                    <div class="c-ey">// Get In Touch</div>
+                    <h2 class="c-title">CONTACT<br><span>CHANNELS</span></h2>
+                    <p class="c-desc">Reach out through our secure communication channels. Admin: <strong style="color:white">Nitin Raj</strong>. We never initiate financial requests first.</p>
+                    <div class="c-warn">
+                        <i class="fas fa-shield-alt"></i>
+                        <p>Verify PGP keys before any high-value transfers. Identity verification required for sensitive operations.</p>
                     </div>
                 </div>
-            );
-        };
+                <div class="c-channels" id="cc"></div>
+            </div>
+            <div class="footer-bar">
+                <div class="f-logo">
+                    <div class="f-logo-box">TS</div>
+                    <span class="f-logo-name">Trend's Sphere</span>
+                </div>
+                <span class="f-copy">© 2026 Trend's Sphere — All rights reserved</span>
+            </div>
+        </div>
+    </section>
 
-        // --- TRUST VOTE ---
-        const TrustVote = () => {
-            const [votes, setVotes] = useState(0);
-            const [hasVoted, setHasVoted] = useState(false);
-            const [pulse, setPulse] = useState(false);
+</div><!-- /app -->
 
-            useEffect(() => {
-                if (localStorage.getItem('hasVoted') === 'true') setHasVoted(true);
-                if (window.firebaseDB && window.firebaseTools) {
-                    const { doc, onSnapshot, setDoc } = window.firebaseTools;
-                    const voteRef = doc(window.firebaseDB, "votes", "likeCounter");
-                    onSnapshot(voteRef, snap => {
-                        if (snap.exists()) setVotes(snap.data().count || 0);
-                        else setDoc(voteRef, { count: 0 });
-                    }, err => console.log("Offline"));
-                }
-            }, []);
+<script>
+// ── DATA ────────────────────────────────────────────
+const P=[
+  {id:1,  name:"Uncensored GPT",                    price:"$200",    image:"ug.png",           cat:"Tools",   desc:"No limits. No filters. Raw AI power at your fingertips.",               link:"ug.html",          hot:true},
+  {id:2,  name:"28 Days Mastery",                   price:"See Plans",image:"28days.png",       cat:"Courses", desc:"Complete cybersecurity career track. Zero to hero.",                   link:"28days.html",      hot:true},
+  {id:3,  name:"SSN + D.O.B",                       price:"$10",     image:"ssn.png",          cat:"Data",    desc:"Real-time verified data sources. Instant access.",                      link:"ssn.html",         hot:false},
+  {id:4,  name:"Premium Enrolls",                   price:"$65+",    image:"enroll.png",       cat:"Data",    desc:"High quality enrollments. Bulk pricing available.",                     link:"enroll.html",      hot:false},
+  {id:5,  name:"Dark Web Course",                   price:"$6",      image:"dwc.png",          cat:"Courses", desc:"Navigate the hidden web safely and effectively.",                       link:"dwc.html",         hot:false},
+  {id:6,  name:"SMM Panel Course",                  price:"$2",      image:"smm.png",          cat:"Courses", desc:"Build your own social media service empire.",                           link:"smm.html",         hot:false},
+  {id:7,  name:"Binning Course",                    price:"$5",      image:"bin.png",          cat:"Courses", desc:"Step-by-step trial and binning mastery.",                               link:"bin.html",         hot:false},
+  {id:8,  name:"Basic Hacking",                     price:"$6",      image:"bhc.png",          cat:"Courses", desc:"Zero to Pro foundational hacking skills.",                              link:"bhc.html",         hot:false},
+  {id:9,  name:"Custom Py Script",                  price:"$30+",    image:"cps.png",          cat:"Services",desc:"Automation solutions tailored precisely to you.",                       link:"cps.html",         hot:false},
+  {id:10, name:"Custom Py Tool",                    price:"$30+",    image:"cpt.png",          cat:"Services",desc:"Unique tools built for unique requirements.",                            link:"cpt.html",         hot:false},
+  {id:11, name:"Web Development",                   price:"$30+",    image:"wd.png",           cat:"Services",desc:"Modern, responsive, high-performance websites.",                        link:"wd.html",          hot:false},
+  {id:12, name:"Book Meeting",                      price:"$3",      image:"book.png",         cat:"Services",desc:"One-on-one consultation with Trend Hive.",                              link:"book.html",        hot:false},
+  {id:13, name:"Track 1 & 2 (No Pin)",              price:"$200",    image:"t1wp.png",         cat:"Data",    desc:"Fast combo access, verified sources only.",                             link:"t1wp.html",        hot:false},
+  {id:14, name:"Track 1 & 2 (PIN)",                 price:"$250",    image:"t2wp.png",         cat:"Data",    desc:"Full access with verified PIN included.",                               link:"t2wp.html",        hot:true},
+  {id:15, name:"Android RAT",                       price:"From $130",image:"rat.jpeg",        cat:"Tools",   desc:"Stealthy remote access tool for Android.",                              link:"rat.html",         hot:true},
+  {id:16, name:"Credit Card Fraud Awareness [2026]",price:"$100",    image:"cc-awareness.jpeg",cat:"Courses", desc:"Defensive analysis of carding workflows and anti-fraud systems.",       link:"cc-awareness.html",hot:true},
+  {id:17, name:"Digital Wallet Security [2025]",    price:"$50",     image:"wallet-bin.jpeg",  cat:"Courses", desc:"Risk assessment of wallet enrollments and BIN exposure vectors.",       link:"wallet-bin.html",  hot:false},
+  {id:18, name:"GTE FCU Enrollment Case Study",     price:"$35",     image:"gte-case.jpeg",    cat:"Research",desc:"Research into identity verification gaps and enrollment defense.",       link:"gte-case.html",    hot:false},
+  {id:19, name:"Banking Fraud Schemes [2026]",      price:"$80",     image:"bank-fraud.jpeg",  cat:"Research",desc:"Comprehensive study of banking vectors and detection logic.",           link:"bank-fraud.html",  hot:false},
+];
 
-            const handleVote = async () => {
-                if (hasVoted) return;
-                setHasVoted(true);
-                setPulse(true);
-                setTimeout(() => setPulse(false), 600);
-                localStorage.setItem('hasVoted', 'true');
-                setVotes(v => v + 1);
-                if (window.firebaseDB && window.firebaseTools) {
-                    const { doc, updateDoc, increment } = window.firebaseTools;
-                    await updateDoc(doc(window.firebaseDB, "votes", "likeCounter"), { count: increment(1) });
-                }
-            };
+// ── LOADER ──────────────────────────────────────────
+(function(){
+  const steps=['Connecting...','Loading catalog...','Verifying assets...','Ready.'];
+  const fill=document.getElementById('loader-fill');
+  const txt=document.getElementById('loader-txt');
+  let i=0;
+  function tick(){
+    if(i>=steps.length){
+      setTimeout(()=>{
+        const l=document.getElementById('loader');
+        l.style.transition='opacity .5s ease';l.style.opacity='0';
+        setTimeout(()=>{
+          l.style.display='none';
+          const a=document.getElementById('app');
+          a.style.display='block';
+          setTimeout(()=>{a.style.opacity='1';initApp();},10);
+        },500);
+      },300);return;
+    }
+    txt.textContent=steps[i];
+    fill.style.width=((i+1)/steps.length*100)+'%';
+    i++;setTimeout(tick,400+Math.random()*260);
+  }
+  setTimeout(tick,300);
+})();
 
-            return (
-                <section id="trust-vote" style={{ padding: '80px 0', background: 'var(--off-white)', borderTop: '1px solid var(--border)' }}>
-                    <div style={{ maxWidth: 600, margin: '0 auto', padding: '0 40px', textAlign: 'center' }}>
-                        <div className="mono" style={{ fontSize: 11, color: 'var(--warm-gray)', letterSpacing: '0.15em', marginBottom: 16 }}>
-                            // COMMUNITY_TRUST_SCORE
-                        </div>
-                        <h2 className="display" style={{ fontSize: 56, color: 'var(--black)', marginBottom: 32 }}>
-                            RATE US
-                        </h2>
+// ── INIT ─────────────────────────────────────────────
+function initApp(){
+  buildMarquee();buildFilters();buildProducts('All');
+  buildStats();buildContact();initVote();
+  window.addEventListener('scroll',()=>{
+    document.getElementById('nav').classList.toggle('scrolled',window.scrollY>60);
+  });
+  const obs=new IntersectionObserver(e=>{e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('vis');});},{threshold:.08});
+  document.querySelectorAll('.appear').forEach(el=>obs.observe(el));
+}
 
-                        {/* Vote button */}
-                        <button
-                            onClick={handleVote}
-                            className={`vote-btn ${hasVoted ? 'voted' : ''} ${pulse ? 'heart-pulse' : ''}`}
-                            style={{ margin: '0 auto 24px', border: 'none', outline: 'none' }}
-                        >
-                            <i className="fas fa-heart" style={{ fontSize: 28, color: hasVoted ? '#FF4B4B' : 'var(--border)', transition: 'color 0.3s' }}></i>
-                        </button>
+// Marquee
+function buildMarquee(){
+  const w=['TOOLS','COURSES','DATA','SERVICES','RESEARCH','SECURITY','INTELLIGENCE','VERIFIED'];
+  let h='';
+  for(let r=0;r<4;r++) w.forEach((x,i)=>{h+=`<span class="mi ${i%2?'r':'w'}">${x} ${i%2?'✦':'—'} </span>`;});
+  document.getElementById('mq').innerHTML=h;
+}
 
-                        <div className="display" style={{ fontSize: 72, color: 'var(--black)', lineHeight: 1 }}>{votes.toLocaleString()}</div>
-                        <div style={{ fontFamily: 'Syne, sans-serif', fontSize: 13, color: 'var(--warm-gray)', marginTop: 8 }}>
-                            {hasVoted ? 'Thanks for your trust! 🙏' : 'Verified community members'}
-                        </div>
-                    </div>
-                </section>
-            );
-        };
+// Filters
+let af='All';
+const cats=['All','Tools','Courses','Data','Services','Research'];
+function buildFilters(){
+  document.getElementById('fr').innerHTML=cats.map(c=>`<button class="pill${c==='All'?' active':''}" onclick="sf('${c}')">${c}</button>`).join('');
+}
+window.sf=function(c){
+  af=c;
+  document.querySelectorAll('.pill').forEach(p=>p.classList.toggle('active',p.textContent===c));
+  buildProducts(c);
+};
 
-        // --- CONTACT SECTION ---
-        const Contact = () => {
-            return (
-                <section id="contact" style={{ padding: '80px 0', background: 'var(--black)' }}>
-                    <div style={{ maxWidth: 1280, margin: '0 auto', padding: '0 40px' }}>
-                        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 60, alignItems: 'center' }}>
-                            {/* Left */}
-                            <div>
-                                <div className="mono" style={{ fontSize: 11, color: 'var(--sage)', letterSpacing: '0.15em', marginBottom: 16 }}>
-                                    // GET IN TOUCH
-                                </div>
-                                <h2 className="display" style={{ fontSize: 'clamp(48px, 5vw, 72px)', color: 'white', lineHeight: 0.95, marginBottom: 24 }}>
-                                    CONTACT<br/>CHANNELS
-                                </h2>
-                                <p style={{ fontFamily: 'Syne, sans-serif', fontSize: 14, color: 'rgba(255,255,255,0.5)', lineHeight: 1.7, maxWidth: 360 }}>
-                                    Reach out through our secure communication channels. Admin: <strong style={{ color: 'white' }}>Nitin Raj</strong>. We never initiate financial requests first.
-                                </p>
+// Products
+function buildProducts(f){
+  const list=f==='All'?P:P.filter(p=>p.cat===f);
+  document.getElementById('pg').innerHTML=list.map((p,i)=>`
+    <div class="pcard appear vis" style="transition-delay:${Math.min(i,.12)*0.06}s">
+      <div class="pcard-img">
+        <img src="${p.image}" alt="${p.name}" onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">
+        <div class="pcard-fallback"><i class="fas fa-box-open" style="font-size:34px"></i><span class="mono" style="font-size:10px">${p.cat}</span></div>
+        ${p.hot?`<span class="badge-hot">🔥 Hot</span>`:`<span class="badge-cat">${p.cat}</span>`}
+      </div>
+      <div class="pcard-body">
+        <div class="pcard-top">
+          <div class="pcard-name">${p.name}</div>
+          <div class="pcard-price">${p.price}</div>
+        </div>
+        <p class="pcard-desc">${p.desc}</p>
+        <div class="pcard-acts">
+          <a href="payments.html" class="pa-buy">Buy Now</a>
+          <a href="${p.link}" class="pa-det">Details</a>
+        </div>
+      </div>
+    </div>`).join('');
+  document.getElementById('pf').textContent=`Showing ${list.length} of ${P.length} products`;
+}
 
-                                <div style={{ marginTop: 28, padding: '14px 18px', background: 'rgba(255, 200, 0, 0.1)', border: '1px solid rgba(255,200,0,0.3)', borderRadius: 12, display: 'flex', gap: 12, alignItems: 'flex-start' }}>
-                                    <i className="fas fa-shield-alt" style={{ color: '#FFB800', marginTop: 2, flexShrink: 0 }}></i>
-                                    <p style={{ fontFamily: 'Syne, sans-serif', fontSize: 12, color: 'rgba(255,255,255,0.6)', lineHeight: 1.6 }}>
-                                        Verify PGP keys before any high-value transfers. Identity verification required for sensitive operations.
-                                    </p>
-                                </div>
-                            </div>
+// Stats
+function buildStats(){
+  const s=[{n:'19+',l:'Total Products',ic:'fa-box-open'},{n:'500+',l:'Active Members',ic:'fa-users'},{n:'$2',l:'Starting Price',ic:'fa-tag'},{n:'24/7',l:'Support',ic:'fa-headset'}];
+  document.getElementById('sg').innerHTML=s.map(({n,l,ic})=>`
+    <div class="scard appear">
+      <div class="scard-icon"><i class="fas ${ic}"></i></div>
+      <div class="scard-n">${n}</div>
+      <div class="scard-l">${l}</div>
+    </div>`).join('');
+}
 
-                            {/* Right — channel cards */}
-                            <div style={{ display: 'flex', flexDirection: 'column', gap: 16 }}>
-                                {[
-                                    { icon: 'fab fa-telegram-plane', label: 'Telegram', sub: '@trendhiveacademy', href: 'https://t.me/trendhiveacademy', color: '#229ED9' },
-                                    { icon: 'fab fa-whatsapp', label: 'WhatsApp', sub: '+91 92044 65448', href: 'https://wa.me/919204465448', color: '#25D366' },
-                                ].map(ch => (
-                                    <a key={ch.label} href={ch.href} target="_blank" style={{
-                                        display: 'flex',
-                                        alignItems: 'center',
-                                        gap: 20,
-                                        padding: '20px 24px',
-                                        background: 'rgba(255,255,255,0.05)',
-                                        border: '1px solid rgba(255,255,255,0.1)',
-                                        borderRadius: 16,
-                                        textDecoration: 'none',
-                                        transition: 'all 0.2s'
-                                    }}
-                                    onMouseEnter={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.09)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.2)'; }}
-                                    onMouseLeave={e => { e.currentTarget.style.background = 'rgba(255,255,255,0.05)'; e.currentTarget.style.borderColor = 'rgba(255,255,255,0.1)'; }}
-                                    >
-                                        <div style={{ width: 48, height: 48, borderRadius: 12, background: `${ch.color}22`, border: `1px solid ${ch.color}44`, display: 'flex', alignItems: 'center', justifyContent: 'center', color: ch.color, fontSize: 20, flexShrink: 0 }}>
-                                            <i className={ch.icon}></i>
-                                        </div>
-                                        <div style={{ flex: 1 }}>
-                                            <div style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 15, color: 'white', marginBottom: 3 }}>{ch.label}</div>
-                                            <div style={{ fontFamily: 'Syne Mono, monospace', fontSize: 12, color: 'rgba(255,255,255,0.4)' }}>{ch.sub}</div>
-                                        </div>
-                                        <i className="fas fa-arrow-right" style={{ color: 'rgba(255,255,255,0.3)', fontSize: 12 }}></i>
-                                    </a>
-                                ))}
-                            </div>
-                        </div>
+// Contact
+function buildContact(){
+  const chs=[
+    {ic:'fab fa-telegram-plane',name:'Telegram',sub:'@trendhiveacademy',href:'https://t.me/trendhiveacademy',c:'#229ED9'},
+    {ic:'fab fa-whatsapp',      name:'WhatsApp', sub:'+91 92044 65448', href:'https://wa.me/919204465448',   c:'#25D366'},
+  ];
+  document.getElementById('cc').innerHTML=chs.map(ch=>`
+    <a href="${ch.href}" target="_blank" class="chan">
+      <div class="chan-ico" style="background:${ch.c}20;border:1px solid ${ch.c}40;color:${ch.c}"><i class="${ch.ic}"></i></div>
+      <div><div class="chan-name">${ch.name}</div><div class="chan-sub">${ch.sub}</div></div>
+      <i class="fas fa-arrow-right chan-arr"></i>
+    </a>`).join('');
+}
 
-                        {/* Footer */}
-                        <div style={{ marginTop: 80, paddingTop: 32, borderTop: '1px solid rgba(255,255,255,0.08)', display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexWrap: 'wrap', gap: 16 }}>
-                            <div style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
-                                <div style={{ width: 28, height: 28, background: 'var(--lime)', borderRadius: 6, display: 'flex', alignItems: 'center', justifyContent: 'center', fontFamily: 'Bebas Neue', color: 'black', fontSize: 13 }}>TS</div>
-                                <span style={{ fontFamily: 'Syne, sans-serif', fontWeight: 700, fontSize: 13, color: 'white' }}>Trend's Sphere</span>
-                            </div>
-                            <div style={{ fontFamily: 'Syne Mono, monospace', fontSize: 11, color: 'rgba(255,255,255,0.3)' }}>
-                                © 2026 Trend's Sphere — All rights reserved
-                            </div>
-                        </div>
-                    </div>
-                </section>
-            );
-        };
+// Vote
+function initVote(){
+  let voted=localStorage.getItem('hasVoted')==='true';
+  const btn=document.getElementById('vb'),heart=document.getElementById('vh'),cnt=document.getElementById('vc'),lbl=document.getElementById('vl');
+  if(voted){btn.classList.add('voted');heart.style.color='var(--red)';lbl.textContent='Thanks for your trust! 🙏';}
+  if(window.firebaseDB&&window.firebaseTools){
+    const{doc,onSnapshot,setDoc}=window.firebaseTools;
+    const ref=doc(window.firebaseDB,'votes','likeCounter');
+    onSnapshot(ref,s=>{if(s.exists())cnt.textContent=(s.data().count||0).toLocaleString();else setDoc(ref,{count:0});},()=>{});
+  }
+  btn.addEventListener('click',async()=>{
+    if(voted)return;voted=true;
+    localStorage.setItem('hasVoted','true');
+    btn.classList.add('voted');heart.style.color='var(--red)';
+    heart.classList.add('hpop');setTimeout(()=>heart.classList.remove('hpop'),450);
+    lbl.textContent='Thanks for your trust! 🙏';
+    cnt.textContent=(parseInt(cnt.textContent.replace(/,/g,''))+1).toLocaleString();
+    if(window.firebaseDB&&window.firebaseTools){
+      const{doc,updateDoc,increment}=window.firebaseTools;
+      await updateDoc(doc(window.firebaseDB,'votes','likeCounter'),{count:increment(1)});
+    }
+  });
+}
+</script>
 
-        // --- BOOT SEQUENCE ---
-        const BootSequence = ({ onComplete }) => {
-            const [progress, setProgress] = useState(0);
-            const [status, setStatus] = useState('Initializing...');
-            const steps = ['Loading assets...', 'Verifying connection...', 'Fetching catalog...', 'Ready.'];
-
-            useEffect(() => {
-                let i = 0;
-                const tick = () => {
-                    if (i >= steps.length) { setTimeout(onComplete, 400); return; }
-                    setStatus(steps[i]);
-                    setProgress(((i + 1) / steps.length) * 100);
-                    i++;
-                    setTimeout(tick, 500 + Math.random() * 300);
-                };
-                setTimeout(tick, 300);
-            }, []);
-
-            return (
-                <motion.div
-                    initial={{ opacity: 1 }}
-                    exit={{ opacity: 0 }}
-                    transition={{ duration: 0.4 }}
-                    style={{
-                        position: 'fixed', inset: 0, background: 'var(--sage)',
-                        zIndex: 200, display: 'flex', flexDirection: 'column',
-                        alignItems: 'center', justifyContent: 'center', gap: 24
-                    }}
-                >
-                    <div className="display" style={{ fontSize: 64, color: 'white', letterSpacing: 4 }}>TS</div>
-                    <div style={{ width: 280, height: 3, background: 'rgba(0,0,0,0.15)', borderRadius: 10, overflow: 'hidden' }}>
-                        <motion.div
-                            animate={{ width: `${progress}%` }}
-                            transition={{ duration: 0.4 }}
-                            style={{ height: '100%', background: 'var(--black)', borderRadius: 10 }}
-                        />
-                    </div>
-                    <div style={{ fontFamily: 'Syne Mono, monospace', fontSize: 12, color: 'rgba(0,0,0,0.6)' }}>{status}</div>
-                </motion.div>
-            );
-        };
-
-        // --- APP ---
-        const App = () => {
-            const [loading, setLoading] = useState(true);
-
-            return (
-                <>
-                    <AnimatePresence>
-                        {loading && <BootSequence onComplete={() => setLoading(false)} />}
-                    </AnimatePresence>
-
-                    {!loading && (
-                        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 0.6 }}>
-                            <Navbar />
-                            <Hero />
-                            <MarqueeStrip />
-                            <ProductsSection />
-                            <StatsSection />
-                            <TrustVote />
-                            <Contact />
-                        </motion.div>
-                    )}
-                </>
-            );
-        };
-
-        ReactDOM.createRoot(document.getElementById('root')).render(<App />);
-    </script>
 </body>
 </html>
